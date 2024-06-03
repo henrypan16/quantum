@@ -1,20 +1,16 @@
 import { Dashboard } from './pages/Dashboard'
 import { UnauthorizedLayout } from './layouts/UnauthorizedLayout'
 import { useLogin } from './utils/useLogin'
-import { useEffect } from 'react'
 
 function App() {
-  const {handleLogin, isLoggedin} = useLogin();
+  const {handleLogin, localCreds} = useLogin();
 
-  useEffect(() => {
-    console.log(isLoggedin)
-  }, [isLoggedin])
-  
+  const isLoggedIn = !!localCreds.password && !!localCreds.username;
 
   return (
     <>
       {/*eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      {isLoggedin ? <Dashboard /> : <UnauthorizedLayout handleLogin={handleLogin}/>}
+      {isLoggedIn ? <Dashboard /> : <UnauthorizedLayout handleLogin={handleLogin}/>}
     </>
   )
 }

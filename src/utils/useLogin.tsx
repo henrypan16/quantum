@@ -6,15 +6,21 @@ export const loginPOSTKey = "loginPOST";
 
 export const useLogin = () => {
   const [formError, setFormError] = useState<string>("");
-  const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
-  
 
+  const [localCreds, setLocalCreds] = useState({
+    username: window.localStorage.getItem("username"),
+    password: window.localStorage.getItem("password")
+  });
+  
   const handleLogin = async (username: string, password: string) => {
       await TorrClient.login({ username: username, password: password})
-      await TorrClient.getVersion().then((response) => {
-          if(response.ok) 
-            setIsLoggedin(true);
-          else {
+        .then((response) => response.text())
+        .then(data => {
+          if(data == 'Ok.') {
+            window.localStorage.setItem("username", username);
+            window.localStorage.setItem("password", password);
+            setLocalCreds({username: username, password: password});
+          } else {
             setFormError("Invalid credentials");
           }
         });
@@ -23,6 +29,6 @@ export const useLogin = () => {
   return {
     handleLogin,
     formError,
-    isLoggedin
+    localCreds
   };
 };

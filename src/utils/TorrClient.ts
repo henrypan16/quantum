@@ -13,7 +13,6 @@ const baseURL = `${serverAddress}api/v2/`;
 interface Credential {
   username: string;
   password: string;
-
 }
 
 export const TorrClient = {
