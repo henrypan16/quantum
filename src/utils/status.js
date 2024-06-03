@@ -1,0 +1,21 @@
+export const Status = [
+    { id: "error", name: "Error", description: "Some error occurred, applies to paused torrents", enable: true },
+    { id: "missingFiles", name: "Missing", description: "Torrent data files are missing", enable: true },
+    { id: "uploading", name: "Uploading", description: "Torrent is being seeded and data is being transferred", enable: true },
+    { id: "pausedUP", name: "pausedUP", description: "Torrent is paused and has finished downloading", enable: false },
+    { id: "queuedUP", name: "queuedUP", description: "Queuing is enabled and torrent is queued for upload", enable: false },
+    { id: "stalledUP", name: "stalledUP", description: "Torrent is being seeded, but no connections were made", enable: false },
+    { id: "checkingUP", name: "checkingUP", description: "Torrent has finished downloading and is being checked", enable: false },
+    { id: "forcedUP", name: "forcedUP", description: "Torrent is forced to uploading and ignores queue limit", enable: false },
+    { id: "allocating", name: "Allocating", description: "Torrent is allocating disk space for download", enable: true },
+    { id: "downloading", name: "Downloading", description: "Torrent is being downloaded and data is being transferred", enable: true },
+    { id: "metaDL", name: "metaDL", description: "Torrent has just started downloading and is fetching metadata", enable: false },
+    { id: "pausedDL", name: "pausedDL", description: "Torrent is paused and has NOT finished downloading", enable: false },
+    { id: "queuedDL", name: "queuedDL", description: "Queuing is enabled and torrent is queued for download", enable: false },
+    { id: "stalledDL", name: "stalledDL", description: "Torrent is being downloaded, but no connections were made", enable: false },
+    { id: "checkingDL", name: "checkingDL", description: "Same as checkingUP, but torrent has NOT finished downloading", enable: false },
+    { id: "forcedDL", name: "forcedDL", description: "Torrent is forced to downloading to ignore queue limit", enable: false },
+    { id: "checkingResumeData", name: "Checking", description: "Checking resume data on qBt startup", enable: true },
+    { id: "moving", name: "Moving", description: "Torrent is moving to another location", enable: true },
+    { id: "unknown", name: "unknown", description: "", enable: false }
+];

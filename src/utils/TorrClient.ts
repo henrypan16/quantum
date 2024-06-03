@@ -18,7 +18,9 @@ interface Credential {
 
 export const TorrClient = {
   getVersion: async () => {
-    return await fetch(baseURL + "/app/version");
+    return await fetch(baseURL + "app/version",{
+      credentials: "include"
+    });
   }, //TESTED
 
   login: async ({username, password}: Credential) => {
