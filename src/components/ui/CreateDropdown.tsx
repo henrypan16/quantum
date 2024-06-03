@@ -1,5 +1,3 @@
-import { DropdownMenu } from "./DropdownMenu";
-import { DropdownToggle } from "./DropdownToggle";
 import { useRef, useEffect } from "react";
 import { Dropdown as FlowbiteDropdown } from "flowbite";
 
@@ -10,24 +8,20 @@ interface RefObject {
 }
 
 interface DropdownButtonProps {
+  button: React.ReactNode;
   children: React.ReactNode;
-  icon: React.ReactNode;
-  menu: string;
-  toggle: string;
-  title: string;
+  id: string;
 }
 
-export const Dropdown = ({children, menu, toggle, title, icon}: DropdownButtonProps) => {
+export const CreateDropdown = ({button, children, id}: DropdownButtonProps) => {
   const dropdown: RefObject = useRef<HtmlDivElement>();
 
-
   useEffect(() => {
-    console.log(children)
     // set the dropdown menu element
-    const targetEl = document.getElementById(menu);
+    const targetEl = document.getElementById(id + '-menu');
 
     // set the element that trigger the dropdown menu on click
-    const triggerEl = document.getElementById(toggle);
+    const triggerEl = document.getElementById(id + '-button');
 
     const options = {
       placement: 'bottom',
@@ -41,13 +35,19 @@ export const Dropdown = ({children, menu, toggle, title, icon}: DropdownButtonPr
     dropdown.current = new FlowbiteDropdown(targetEl, triggerEl, options)
   })
   
-
   return (
     <>
-      <DropdownToggle id={toggle} icon={icon}/>
-      <DropdownMenu title={title} id={menu}>
+      {/* Dropdown Button */}
+      <button type="button" id={id + '-button'} className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        {button}
+      </button>
+
+      <ul className="hidden space-y-2" id={id + '-menu'}>
         {children}
-      </DropdownMenu>
+      </ul>
+      {/* Dropdown Menu */}
+
+
     </>
   )
 }

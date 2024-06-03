@@ -1,4 +1,4 @@
-import { Dropdown } from "/src/components/general/Dropdown"
+import { Dropdown } from "/src/components/ui/Dropdown"
 
 export const User = () => {
     const icon = (

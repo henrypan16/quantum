@@ -1,0 +1,21 @@
+export const Status = [
+    { name: "error", description: "Some error occurred, applies to paused torrents" },
+    { name: "missingFiles", description: "Torrent data files are missing" },
+    { name: "uploading", description: "Torrent is being seeded and data is being transferred" },
+    { name: "pausedUP", description: "Torrent is paused and has finished downloading" },
+    { name: "queuedUP", description: "Queuing is enabled and torrent is queued for upload" },
+    { name: "stalledUP", description: "Torrent is being seeded, but no connections were made" },
+    { name: "checkingUP", description: "Torrent has finished downloading and is being checked" },
+    { name: "forcedUP", description: "Torrent is forced to uploading and ignores queue limit" },
+    { name: "allocating", description: "Torrent is allocating disk space for download" },
+    { name: "downloading", description: "Torrent is being downloaded and data is being transferred" },
+    { name: "metaDL", description: "Torrent has just started downloading and is fetching metadata" },
+    { name: "pausedDL", description: "Torrent is paused and has NOT finished downloading" },
+    { name: "queuedDL", description: "Queuing is enabled and torrent is queued for download" },
+    { name: "stalledDL", description: "Torrent is being downloaded, but no connections were made" },
+    { name: "checkingDL", description: "Same as checkingUP, but torrent has NOT finished downloading" },
+    { name: "forcedDL", description: "Torrent is forced to downloading to ignore queue limit" },
+    { name: "checkingResumeData", description: "Checking resume data on qBt startup" },
+    { name: "moving", description: "Torrent is moving to another location" },
+    { name: "unknown", description: "" }
+];
