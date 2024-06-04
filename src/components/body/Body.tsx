@@ -1,3 +1,7 @@
+import { TorrClient } from '../../utils/TorrClient';
+import { useState, useEffect } from 'react';
+import { convertTorrentInfo } from '../../utils/convert';
+
 export const Body = () => {
     const mockData = [
         {
@@ -155,6 +159,14 @@ export const Body = () => {
             time: '10'
         },
     ];
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        TorrClient.getTorrents()
+            .then((response) => response.json())
+            .then((data) => setData(data))
+            .catch((error: unknown) => console.error('Error:', error));
+    },[])
+    console.log(data);
 
   return (
     <>
@@ -170,9 +182,9 @@ export const Body = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockData.map((item, index) => (
+                    {data.map((item, index) => (
                         <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            {Object.values(item).map((value, index) => (
+                            {Object.values(convertTorrentInfo(item)).map((value, index) => (
                                 <td key={index} className="px-6 py-4 whitespace-nowrap dark:text-white">
                                     {value}
                                 </td>

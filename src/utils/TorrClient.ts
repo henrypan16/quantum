@@ -63,38 +63,56 @@ export const TorrClient = {
     });
   },
 
-  // sync: async (rid: number): Promise<TorrMainData> => {
-  //   const { data } = await APICall.get("sync/maindata", {
-  //     params: {
-  //       rid,
-  //     },
-  //   });
+  sync: async (rid: number): Promise<TorrMainData> => {
+    const url = new URL(baseURL + "sync/maindata")
+    url.search = new URLSearchParams({
+      rid: rid});
+    const data  = await fetch(url, {
+      credentials: "include"
+    })
 
-  //   return data;
-  // },
+    return data;
+  },
 
-  // resume: async (hash = "") => {
-  //   return await APICall.post("torrents/resume", `hashes=${hash}`);
-  // },
+  resume: async (hash = "") => {
+    return await fetch(baseURL + "torrents/resume", {
+      method: "POST",
+      body: `hashes=${hash}`,
+      credentials: "include",
+    });
+  },
 
-  // resumeAll: async () => {
-  //   return await APICall.post("torrents/resume", `hashes=all`);
-  // },
+  resumeAll: async () => {
+    return await fetch(baseURL + "torrents/resume", {
+      method: "POST",
+      body: `hashes=all`,
+      credentials: "include",
+    });
+  },
 
-  // pause: async (hash = "") => {
-  //   return await APICall.post("torrents/pause", `hashes=${hash}`);
-  // },
+  pause: async (hash = "") => {
+    return await fetch(baseURL + "torrents/pause", {
+      method: "POST",
+      body: `hashes=${hash}`,
+      credentials: "include",
+    });
+  },
 
-  // pauseAll: async () => {
-  //   return await APICall.post("torrents/pause", `hashes=all`);
-  // },
+  pauseAll: async () => {
+    return await fetch(baseURL + "torrents/pause", {
+      method: "POST",
+      body: `hashes=all`,
+      credentials: "include",
+    });
+  },
 
-  // remove: async (hash = "", deleteFiles = true) => {
-  //   return await APICall.post(
-  //     "torrents/delete",
-  //     `hashes=${hash}&deleteFiles=${deleteFiles}`
-  //   );
-  // },
+  remove: async (hash = "", deleteFiles = 'false') => {
+    return await fetch(baseURL + "torrents/delete", {
+      method: "POST",
+      body: `hashes=${hash}&deleteFiles=${deleteFiles}`,
+      credentials: "include",
+    });
+  },
 
   // addTorrent: async (
   //   uploadType: "urls" | "torrents",
