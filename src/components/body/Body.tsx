@@ -1,6 +1,7 @@
 import { TorrClient } from '../../utils/TorrClient';
 import { useState, useEffect } from 'react';
 import { convertTorrentInfo } from '../../utils/convert';
+import { Info } from '../../pages/Info'
 
 export const Body = () => {
     const mockData = [
@@ -170,29 +171,36 @@ export const Body = () => {
 
   return (
     <>
-        <main className="p-4 md:ml-64 h-screen pt-20 relative">
-            <table className="w-full h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr className="h-full">
-                        {['Name', 'Size', 'Progress', 'Status', 'Seeds', 'Peers','Down Speed', 'Up Speed', 'Ratio', 'Downloaded', 'Uploaded', 'Time']
-                            .map((item, index) => <th key={index} scope="col" className="px-6 py-3">
-                                    {item}
-                                </th>
-                        )}
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((item, index) => (
-                        <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            {Object.values(convertTorrentInfo(item)).map((value, index) => (
-                                <td key={index} className="px-6 py-4 whitespace-nowrap dark:text-white">
-                                    {value}
-                                </td>
-                            ))}
+        <main className="p-4 pb-0 md:ml-64 h-screen pt-20 relative flex flex-col gap-4">
+            <div className="basis-1/2 w-full overflow-auto relative scrollbar">
+                <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 w-full">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr className="h-full">
+                            {['Name', 'Size', 'Progress', 'Status', 'Seeds', 'Peers','Down Speed', 'Up Speed', 'Ratio', 'Downloaded', 'Uploaded', 'Time']
+                                .map((item, index) => <th key={index} scope="col" className="px-6 py-3">
+                                        {item}
+                                    </th>
+                            )}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className="">
+                        {data.map((item, index) => (
+                            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                {Object.values(convertTorrentInfo(item)).map((value, index) => (
+                                    <td key={index} className="px-6 py-4 whitespace-nowrap dark:text-white">
+                                        {value}
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="basis-1/2 w-full overflow-auto relative scrollbar flex flex-col-reverse border rounded-t-sm border-gray-700 bg-gray-800">
+                
+                <Info/>
+            </div>
+
         </main>
     </>
   )
