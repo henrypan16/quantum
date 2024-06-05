@@ -2,7 +2,6 @@ import { Dashboard } from './pages/Dashboard'
 import { UnauthorizedLayout } from './layouts/UnauthorizedLayout'
 import { useLogin } from './utils/useLogin'
 
-
 function App() {
   const {handleLogin, localCreds} = useLogin();
   

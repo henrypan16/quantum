@@ -15,7 +15,7 @@ interface Credential {
   password: string;
 }
 
-export const TorrClient = {
+export const torrentApi = {
   getVersion: async () => {
     return await fetch(baseURL + "app/version",{
       credentials: "include"
@@ -31,8 +31,8 @@ export const TorrClient = {
       credentials: "include",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      }
-    })
+      }}
+    );
   },
 
   logout: async () => {
@@ -41,17 +41,12 @@ export const TorrClient = {
     });
   },
 
-  getTorrents: async (sortKey = "added_on", reverse = true): Promise<TorrTorrentInfo[]> => {
+  getTorrents: async () => {
     const url = new URL(baseURL + "torrents/info")
-    url.search = new URLSearchParams({
-      sort: sortKey,
-      reverse: reverse}).toString();
 
-    const response = await fetch(url, {
+    return await fetch(url, {
       credentials: "include", // include, *same-origin, omit   
-    });
-    
-    return response;
+    }).then((response) => response.json()) as Promise<JSON>;
   },
 
   getProperties: async (hash: string) => {
