@@ -163,11 +163,10 @@ export const Body = () => {
     const [data, setData] = useState([]);
     useEffect(() => {
         TorrClient.getTorrents()
-            .then((response) => response.json())
-            .then((data) => setData(data))
-            .catch((error: unknown) => console.error('Error:', error));
+            .then((response: Response): string[] => response.json() as Promise<string[]>)
+            .then((data) => {setData(data)})
+            .catch((error: unknown) => {console.error('Error:', error)});
     },[])
-    console.log(data);
 
   return (
     <>
@@ -197,7 +196,6 @@ export const Body = () => {
                 </table>
             </div>
             <div className="basis-1/2 w-full overflow-auto relative scrollbar flex flex-col-reverse border rounded-t-sm border-gray-700 bg-gray-800">
-                
                 <Info/>
             </div>
 

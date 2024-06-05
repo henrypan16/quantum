@@ -1,11 +1,19 @@
 import { TorrTorrentInfo } from '../utils/types';
 import  stateDictionary  from './StateDictionary';
 
+const Progress = ({percentage}: {percentage: string}) => {
+    return <div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+        <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{width: `${percentage}%`}}>
+            {percentage+'%'}
+        </div>
+    </div>}
+
+
 export const convertTorrentInfo = (info: TorrTorrentInfo) => {
     return {
         name: info.name,
         size: intToSize(info.size),
-        progress: info.progress,
+        progress: <Progress percentage={info.progress}/>,
         status: stateDictionary[info.state].short,
         seeds: info.num_seeds,
         peers: info.num_leechs,
