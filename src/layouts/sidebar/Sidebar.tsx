@@ -1,10 +1,10 @@
 import { Status } from '../../utils/status'; 
-import AngleDown from '../../assets/icons/AngleDown';
 import Clipboard from '../../assets/icons/Clipboard';
 import {PieChart} from '../../assets/icons/PieChart';
 import {Tag} from '../../assets/icons/Tag';
 import {CreateCollapse} from '../../components/ui/CreateCollapse';
 import {Refresh} from '../../assets/icons/Refresh';
+import {Collapse} from '../../components/ui/Collapse';
 
 export const Sidebar = () => {
     return (
@@ -25,43 +25,9 @@ export const Sidebar = () => {
                     
                     <li>
                         <CreateCollapse ids={['status','categories','tags']}>
-                            <div id="trigger-status" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <Refresh/>
-                                <span className="flex-1 ml-3 text-left whitespace-nowrap select-none">Status</span>
-                                <AngleDown/>
-                            </div>
-                            <ul id="target-status" className="hidden">
-                                {Status.map((item, index) => {return item.enable && <li key={index}>
-                                        <a href="#" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                        >{item.name}</a>
-                                    </li>
-                                })}
-                            </ul>
-                            <div id="trigger-categories" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"> 
-                                <Clipboard/>
-                                <span className="flex-1 ml-3 text-left whitespace-nowrap select-none">Categories</span>
-                                <AngleDown/>
-                            </div>
-                            <ul id="target-categories" className="hidden">
-                                {['Action', 'Seed', 'Music', 'Movies'].map((item, index) => <li key={index}>
-                                        <a href="#" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                        >{item}</a>
-                                    </li>
-                                )}
-                            </ul>
-                            <div id="trigger-tags" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"> 
-                                <Tag/>
-                                <span className="flex-1 ml-3 text-left whitespace-nowrap select-none">Tags</span>
-                                <AngleDown/>
-                            </div>
-                            <ul id="target-tags" className="hidden">
-                                {['tag', 'none', 'remove', 'nothing'].map((item, index) => <li key={index}>
-                                        <a href="#" className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                            {item}
-                                        </a>
-                                    </li>
-                                )}
-                            </ul>
+                            <Collapse list={Status} id='status' icon={<Refresh/>}/>
+                            <Collapse list={[{name: 'Action'}, {name: 'Seed'}, {name: 'Music'}, {name: 'Movies'}]} id='categories' icon={<Clipboard/>}/>
+                            <Collapse list={[{name: 'tag'}, {name: 'none'}, {name: 'remove'}, {name: 'nothing'}]} id='tags' icon={<Tag/>}/>
                         </CreateCollapse>
                     </li>
                 </ul>

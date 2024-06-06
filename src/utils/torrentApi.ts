@@ -42,7 +42,12 @@ export const torrentApi = {
 
     return await fetch(url, {
       credentials: "include", // include, *same-origin, omit   
-    }).then((response) => response.json()) as Promise<JSON>;
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.json()}
+      else {
+        throw new Error("Error");
+      }}) as Promise<JSON>;
   },
 
   getProperties: async (hash: string) => {
@@ -51,7 +56,12 @@ export const torrentApi = {
       hash: hash});
     return await fetch(url, {
       credentials: "include"
-    }).then((response) => response.json()) as Promise<JSON>;
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.json()}
+      else {
+        throw new Error("Error");
+      }}) as Promise<JSON>;
   },
 
   sync: async (rid: number): Promise<TorrMainData> => {

@@ -48,7 +48,7 @@ export const intToSpeed = (time: number) => {
     return time.toFixed(2) + ' ' + units[i];
 }
 
-export const secToTime = (time: number) => {
+export const secToTime = (time: number): string => {
     const units = ['s', 'm', 'h', 'd'];
     let i = 0;
     while (time > 60 && i < units.length) {

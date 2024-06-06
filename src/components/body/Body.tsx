@@ -16,6 +16,7 @@ export const Body = () => {
     if(isError) {
         console.log('Error');
         window.localStorage.clear();
+        window.location.reload();
     }
 
     const itemClick = (index: number) => {

@@ -38,7 +38,7 @@ export const CreateCollapse = ({ids, children}: CreateCollapseProps) => {
             activeClasses: 'bg-gray-100 dark:bg-gray-800 text-white dark:text-white',
             inactiveClasses: 'text-gray-500 dark:text-white'
         }
-
+        console.log(accordionItems)
         accordionElement.current = new Accordion(accordionElement, accordionItems, options);
     })
 
