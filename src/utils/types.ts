@@ -107,6 +107,11 @@ export type TorrTorrentInfo = {
   category: string;
   dlspeed: number;
   ratio: number;
+  peers: number;
+  nb_connections: string;
+  nb_connections_limit: string;
+  total_wasted: string;
+  last_seen: string;
 };
 
 export type TorrMainData = {

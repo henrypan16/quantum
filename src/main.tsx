@@ -4,7 +4,7 @@ import 'flowbite'
 import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-const queryClient: queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 //document.getElementById('root')!
 ReactDOM.createRoot(document.getElementById('root')).render(

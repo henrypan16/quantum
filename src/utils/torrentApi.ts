@@ -1,7 +1,3 @@
-import {
-  TorrTorrentInfo,
-} from "./types";
-
 let serverAddress = "http://localhost:8080/";
 
 if (serverAddress.substring(serverAddress.length - 1) !== "/") {
@@ -55,7 +51,7 @@ export const torrentApi = {
       hash: hash});
     return await fetch(url, {
       credentials: "include"
-    });
+    }).then((response) => response.json()) as Promise<JSON>;
   },
 
   sync: async (rid: number): Promise<TorrMainData> => {
