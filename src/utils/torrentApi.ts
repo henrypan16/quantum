@@ -114,7 +114,55 @@ export const torrentApi = {
       credentials: "include",
     });
   },
+  
+  getCategories: async (): Promise<TorrCategories> => {
+    return await fetch(baseURL + "torrents/categories", {
+      credentials: "include",
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.json()}
+      else {
+        throw new Error("Error");
+      }}) as Promise<TorrCategories>;
+  },
 
+  addCategory: async (name: string, path: string) => {
+    return await fetch(baseURL + "torrents/createCategory", {
+      method: "POST",
+      body: `category=${name}&savePath=${path}`,
+      credentials: "include",
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.status}
+      else {
+        throw new Error("Error");
+      }}) as Promise<string>;
+  },
+
+  removeCategories: async (category: string) => {
+    return await fetch(baseURL + "torrents/removeCategories", {
+      method: "POST",
+      body: `categories=${category}`,
+      credentials: "include",
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.status
+      }
+      else {
+        throw new Error("Error");
+      }}) as Promise<string>;
+  },
+
+  getTags: async (): Promise<TorrCategories> => {
+    return await fetch(baseURL + "torrents/tags", {
+      credentials: "include",
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.json()}
+      else {
+        throw new Error("Error");
+      }}) as Promise<TorrCategories>;
+  },
   // addTorrent: async (
   //   uploadType: "urls" | "torrents",
   //   file: string | File,
@@ -145,24 +193,7 @@ export const torrentApi = {
   //   );
   // },
 
-  // getCategories: async (): Promise<TorrCategories> => {
-  //   const { data } = await APICall.get("torrents/categories");
-  //   return data;
-  // },
 
-  // addCategory: async (name: string, path: string) => {
-  //   return await APICall.post(
-  //     "torrents/createCategory",
-  //     `category=${name}&savePath=${path}`
-  //   );
-  // },
-
-  // removeCategories: async (category: string) => {
-  //   return await APICall.post(
-  //     "torrents/removeCategories",
-  //     `categories=${category}`
-  //   );
-  // },
 
   // saveCategory: async (category: string, savePath: string) => {
   //   return await APICall.post(
