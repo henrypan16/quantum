@@ -163,23 +163,16 @@ export const torrentApi = {
         throw new Error("Error");
       }}) as Promise<TorrCategories>;
   },
-  // addTorrent: async (
-  //   uploadType: "urls" | "torrents",
-  //   file: string | File,
-  //   category = ""
-  // ) => {
-  //   const formData = new FormData();
-  //   formData.append("category", category);
-  //   formData.append(uploadType, file);
 
-  //   const { data } = await APICall.post("torrents/add", formData, {
-  //     headers: {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //   });
-
-  //   return data;
-  // },
+  addTorrent: async (file) => {
+    return await fetch(baseURL + "torrents/add", 
+      {
+        method: "POST",
+        body: `torrents=${file}`,
+        credentials: "include",
+      }
+    ).then((response) => {console.log(response)})
+  },
 
   // getSettings: async (): Promise<TorrSettings> => {
   //   const { data } = await APICall.get("app/preferences");
