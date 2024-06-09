@@ -11,7 +11,7 @@ export const General = ({torrent}: {torrent: TorrTorrentInfo}) => {
     });
 
     if(isError) {
-        window.location.reload();
+         //window.location.reload();
     }
 
   return !isPending && (

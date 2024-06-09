@@ -1,4 +1,4 @@
-let serverAddress = "http://localhost:8080/";
+let serverAddress = "/";
 
 if (serverAddress.substring(serverAddress.length - 1) !== "/") {
   serverAddress = `${serverAddress}/`;
@@ -15,7 +15,12 @@ export const torrentApi = {
   getVersion: async () => {
     return await fetch(baseURL + "app/version",{
       credentials: "include"
-    });
+    }).then((response) => {
+      if(response.status == 200) {
+        return response.text()}
+      else {
+        throw new Error("Error");
+      }}) as Promise<number>;
   }, //TESTED
 
   login: async ({username, password}: Credential) => {
@@ -38,9 +43,7 @@ export const torrentApi = {
   },
 
   getTorrents: async () => {
-    const url = new URL(baseURL + "torrents/info")
-
-    return await fetch(url, {
+    return await fetch(baseURL + "torrents/info", {
       credentials: "include", // include, *same-origin, omit   
     }).then((response) => {
       if(response.status == 200) {
@@ -51,10 +54,7 @@ export const torrentApi = {
   },
 
   getProperties: async (hash: string) => {
-    const url = new URL(baseURL + "torrents/properties")
-    url.search = new URLSearchParams({
-      hash: hash});
-    return await fetch(url, {
+      return await fetch(baseURL + "torrents/properties?" + `hash=${hash}`, {
       credentials: "include"
     }).then((response) => {
       if(response.status == 200) {

@@ -1,16 +1,19 @@
-import { Dashboard } from './pages/Dashboard'
-import { UnauthorizedLayout } from './layouts/UnauthorizedLayout'
+import { Dashboard } from './components/Dashboard'
+import { Authentication } from './components/Authentication'
 import { useLogin } from './utils/useLogin'
+import { useQuery } from '@tanstack/react-query' 
+import { torrentApi } from './utils/torrentApi'
 
 function App() {
-  const {handleLogin, localCreds} = useLogin();
-  
-  const isLoggedIn = !!localCreds.password && !!localCreds.username;
+  const {isError} = useQuery({
+    queryKey: ['torrent', 'info'],
+    queryFn: torrentApi.getVersion
+  })
 
   return (
     <>
       {/*eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      {isLoggedIn ? <Dashboard /> : <UnauthorizedLayout handleLogin={handleLogin}/>}
+      {isError ? <Authentication/> : <Dashboard />}
     </>
   )
 }

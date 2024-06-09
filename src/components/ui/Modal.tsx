@@ -1,40 +1,8 @@
-import { Modal as FlowbiteModal } from 'flowbite';
-import type { ModalOptions, ModalInterface } from 'flowbite';
-import type { InstanceOptions } from 'flowbite';
-import {useRef, useEffect} from 'react'
-
-export const Modal = () => {
-    const modalRef = useRef<ModalInterface>();
-
-    useEffect(() => {
-        const modalElement: HTMLElement = document.getElementById('modalEl');
-
-        const modalOptions: ModalOptions = {
-            placement: 'bottom-right',
-            backdrop: 'dynamic',
-            backdropClasses:
-                'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-            closable: true,
-        };
-        
-        // instance options object
-        const instanceOptions: InstanceOptions = {
-          id: 'modalEl',
-          override: true
-        };
-        
-        modalRef.current = new FlowbiteModal(modalElement, modalOptions, instanceOptions);    
-    }, [])
-    
+export const Modal = ({id}) => {
 
   return (
     <>
-        {/* <!-- Modal toggle --> */}
-        <button onClick={() => {modalRef.current.toggle()}} className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-        Toggle modal
-        </button>
-
-        <div id="modalEl" tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id={id} tabIndex="-1" aria-hidden="true" className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div className="relative p-4 w-full max-w-md max-h-full">
                 {/* <!-- Modal content --> */}
                 <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

@@ -1,9 +1,10 @@
 import {useState} from "react";
+import {useLogin} from '../utils/useLogin'
 
-export const UnauthorizedLayout = ({handleLogin}: {handleLogin: () => void}) => {
+export const Authentication = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const {handleLogin} = useLogin();
     const submit = (e :React.FormEvent) => {
         e.preventDefault();
         handleLogin(username, password)

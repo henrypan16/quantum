@@ -1,24 +1,25 @@
-import { torrentApi } from '../../utils/torrentApi';
+import { torrentApi } from '../../utils/torrentApi'
 import { useState } from 'react';
 import { convertTorrentInfo } from '../../utils/convert';
-import { Info } from '../../pages/Info'
+import { Info } from '../Info'
 import { useQuery } from '@tanstack/react-query';
 import { Loading } from '../ui/Loading';
-import { TorrTorrentInfo } from '../../utils/types.ts'
+import { TorrTorrentInfo } from '../../utils/types'
 
 export const Body = () => {
     const [selectedItem, setSelectedItem] = useState(0);
     const {data, isError, isPending}: {data: TorrTorrentInfo[]} = useQuery({
-        queryKey: ['torrents'],
+        queryKey: ['torrents','all'],
         queryFn: torrentApi.getTorrents
     });
     
+
     if(isError) {
         console.log('Error');
         window.localStorage.clear();
-        window.location.reload();
+        //window.location.reload();
     }
-
+    
     const itemClick = (index: number) => {
         setSelectedItem(index);
         console.log()

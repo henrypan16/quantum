@@ -20,7 +20,7 @@ export const useLogin = () => {
           localStorage.setItem("password", localCreds.password);
         } else {
           localStorage.clear();
-          window.location.reload();
+          
         }
       }).catch((error: unknown) => {
         console.log(error);
