@@ -1,19 +1,17 @@
 import { Dashboard } from './components/Dashboard'
 import { Authentication } from './components/Authentication'
-import { useLogin } from './utils/useLogin'
-import { useQuery } from '@tanstack/react-query' 
-import { torrentApi } from './utils/torrentApi'
+import { useAuth } from './utils/useAuth'
+import { useState } from 'react'
+import { Loading } from './components/ui/Loading'
 
-function App() {
-  const {isError} = useQuery({
-    queryKey: ['torrent', 'info'],
-    queryFn: torrentApi.getVersion
-  })
+const App = () =>{
+  const {status} = useAuth();
 
+  
   return (
     <>
       {/*eslint-disable-next-line @typescript-eslint/no-misused-promises*/}
-      {isError ? <Authentication/> : <Dashboard />}
+      {status ? <Dashboard /> : <Authentication />}
     </>
   )
 }

@@ -33,7 +33,7 @@ export const AddTorrentForm = () => {
     }
 
     const close = () => {
-        event = document.createEvent("HTMLEvents");
+        const event = document.createEvent("HTMLEvents");
         event.initEvent("close-addTorrent", true, true);
         event.eventName = "close-addTorrent";
         document.dispatchEvent(event);

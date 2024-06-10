@@ -19,6 +19,7 @@ export const torrentApi = {
       if(response.status == 200) {
         return response.text()}
       else {
+        console.log("Error")
         throw new Error("Error");
       }}) as Promise<number>;
   }, //TESTED
@@ -164,8 +165,8 @@ export const torrentApi = {
       }}) as Promise<TorrCategories>;
   },
 
-  addTorrent: async (file) => {
-    return await fetch(baseURL + "torrents/add", 
+  addTorrent: async (file: string) => {
+    await fetch(baseURL + "torrents/add", 
       {
         method: "POST",
         body: `torrents=${file}`,
