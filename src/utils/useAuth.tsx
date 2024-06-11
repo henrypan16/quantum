@@ -1,5 +1,5 @@
 import { torrentApi } from "./torrentApi";
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useState, useEffect } from "react";
 
 
@@ -10,9 +10,8 @@ export const useAuth = () => {
   })
   const [status, setStatus] = useState(false);
   
-  useEffect(() => {
+  useEffect( () => {
     mutation.mutate({username: user.username, password: user.password});
-    setStatus(user.username !== '' && user.password !== '');
   }, [])
 
 
@@ -20,9 +19,12 @@ export const useAuth = () => {
     mutationFn: torrentApi.login,
     onSuccess: (data: Response) => {
       data.text().then((response) => {
+        console.log(response);
         if(response === "Ok."){
           localStorage.setItem("username", user.username);
           localStorage.setItem("password", user.password);
+          setStatus(true);
+          
         } else {
           localStorage.clear();
         }
@@ -32,11 +34,8 @@ export const useAuth = () => {
     }})
 
   const login = (username: string, password: string) => {
-      setUser({username, password});
+      setUser({username: username, password:password});
       mutation.mutate({username: username, password: password});
-      if(mutation.isSuccess) {
-        return true;
-      }
   }
 
   return {

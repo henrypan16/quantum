@@ -1,15 +1,12 @@
 import {useState} from "react";
-import {useAuth} from '../utils/useAuth'
 
-export const Authentication = () => {
+export const Authentication = ({login}: {login: () => void}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {login} = useAuth();
+
     const submit = (e :React.FormEvent) => {
         e.preventDefault();
-        if(login(username, password)) {
-            window.location.reload();
-        }
+        login(username, password);
     }
 
   return (
