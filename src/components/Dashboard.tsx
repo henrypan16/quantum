@@ -1,14 +1,14 @@
-import {MainLayout} from '../layouts/MainLayout'
-import {Body} from '../components/body/Body'
+import { MainLayout } from "../layouts/MainLayout";
+import { Body } from "../components/body/Body";
 
 export const Dashboard = () => {
-  return (
-    <div>
-        <div className="antialiased bg-gray-50 dark:bg-gray-900">
-            <MainLayout>
-              <Body />
-            </MainLayout>
-        </div>
-    </div>
- )
-}
+	return (
+		<div>
+			<div className="antialiased bg-gray-50 dark:bg-gray-900">
+				<MainLayout>
+					<Body />
+				</MainLayout>
+			</div>
+		</div>
+	);
+};
