@@ -9,7 +9,7 @@ interface itemProps {
 	id: string;
 	icon: React.ReactNode;
 }
-import React from 'react';
+import React from "react";
 
 export const Collapse = ({ list, id, icon }: itemProps) => {
 	const [active, setActive] = useState(false);

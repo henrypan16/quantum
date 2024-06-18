@@ -1,5 +1,5 @@
 import { useState } from "react";
-import React from 'react'
+import React from "react";
 
 export const Authentication = ({ login }: { login: () => void }) => {
 	const [username, setUsername] = useState("");

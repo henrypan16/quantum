@@ -3,7 +3,7 @@ import { torrentApi } from "../../utils/torrentApi";
 import { TransferInfo } from "./TransferInfo";
 import { TorrTorrentInfo } from "../../utils/types";
 import { intToSize, intToSpeed, secToTime } from "../../utils/convert";
-import React from 'react'
+import React from "react";
 
 export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 	const { data, isPending, isError }: { data: TorrTorrentInfo } = useQuery({
@@ -24,7 +24,8 @@ export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 						<div
 							className="bg-blue-600 h-2.5 rounded-full"
 							style={{
-								width: (torrent.progress * 100).toString() + "%",
+								width:
+									(torrent.progress * 100).toString() + "%",
 							}}></div>
 					</div>
 				</div>

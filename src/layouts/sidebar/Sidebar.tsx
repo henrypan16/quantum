@@ -8,7 +8,7 @@ import { Collapse } from "../../components/ui/Collapse";
 import { useQuery } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi";
 import { Logo } from "./Logo";
-import React from 'react'
+import React from "react";
 
 export const Sidebar = () => {
 	const categories: { data: { id: { name: string; savePath: string } } } =

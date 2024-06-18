@@ -1,6 +1,6 @@
 import { TorrTorrentInfo } from "../utils/types";
 import stateDictionary from "./StateDictionary";
-import React from 'react'
+import React from "react";
 
 const Progress = ({ percentage }: { percentage: string }) => {
 	return (
@@ -18,7 +18,9 @@ export const convertTorrentInfo = (info: TorrTorrentInfo) => {
 	return {
 		name: info.name,
 		size: intToSize(info.size),
-		progress: <Progress percentage={Math.round(info.progress * 100 * 10) / 10} />,
+		progress: (
+			<Progress percentage={Math.round(info.progress * 100 * 10) / 10} />
+		),
 		status: stateDictionary[info.state].short,
 		seeds: info.num_seeds,
 		peers: info.num_leechs,
