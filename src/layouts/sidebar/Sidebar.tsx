@@ -7,6 +7,7 @@ import { Refresh } from "../../assets/icons/Refresh";
 import { Collapse } from "../../components/ui/Collapse";
 import { useQuery } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi";
+import React from 'react'
 
 export const Sidebar = () => {
 	const categories: { data: { id: { name: string; savePath: string } } } =
@@ -20,7 +21,6 @@ export const Sidebar = () => {
 		queryFn: torrentApi.getTags,
 	});
 
-	if (!categories.isPending) console.log(tags.data);
 	return (
 		<>
 			<aside

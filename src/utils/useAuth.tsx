@@ -18,7 +18,6 @@ export const useAuth = () => {
 		onSuccess: (data: Response) => {
 			data.text()
 				.then((response) => {
-					console.log(response);
 					if (response === "Ok.") {
 						localStorage.setItem("username", user.username);
 						localStorage.setItem("password", user.password);

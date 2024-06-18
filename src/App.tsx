@@ -1,6 +1,7 @@
 import { Dashboard } from "./components/Dashboard";
 import { Authentication } from "./components/Authentication";
 import { useAuth } from "./utils/useAuth";
+import React from 'react'
 
 const App = () => {
 	const { status, login } = useAuth();

@@ -37,13 +37,13 @@ export const torrentApi = {
 					"application/x-www-form-urlencoded; charset=UTF-8",
 			},
 		});
-	},
+	}, //TESTED
 
 	logout: async () => {
 		return await fetch(baseURL + "auth/logout", {
 			method: "POST",
 		});
-	},
+	}, //NOT
 
 	getTorrents: async () => {
 		return (await fetch(baseURL + "torrents/info", {
@@ -55,7 +55,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<JSON>;
-	},
+	}, //TESTED
 
 	getProperties: async (hash: string) => {
 		return (await fetch(baseURL + "torrents/properties?" + `hash=${hash}`, {
@@ -67,7 +67,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<JSON>;
-	},
+	}, //TESTED
 
 	sync: async (rid: number): Promise<TorrMainData> => {
 		const url = new URL(baseURL + "sync/maindata");
@@ -79,7 +79,7 @@ export const torrentApi = {
 		});
 
 		return data;
-	},
+	}, //NOT
 
 	resume: async (hash = "") => {
 		return await fetch(baseURL + "torrents/resume", {
@@ -87,7 +87,7 @@ export const torrentApi = {
 			body: `hashes=${hash}`,
 			credentials: "include",
 		});
-	},
+	}, //NOT
 
 	resumeAll: async () => {
 		return await fetch(baseURL + "torrents/resume", {
@@ -95,7 +95,7 @@ export const torrentApi = {
 			body: `hashes=all`,
 			credentials: "include",
 		});
-	},
+	}, //NOT
 
 	pause: async (hash = "") => {
 		return await fetch(baseURL + "torrents/pause", {
@@ -103,7 +103,7 @@ export const torrentApi = {
 			body: `hashes=${hash}`,
 			credentials: "include",
 		});
-	},
+	}, //NOT
 
 	pauseAll: async () => {
 		return await fetch(baseURL + "torrents/pause", {
@@ -111,7 +111,7 @@ export const torrentApi = {
 			body: `hashes=all`,
 			credentials: "include",
 		});
-	},
+	}, //NOT
 
 	remove: async (hash = "", deleteFiles = "false") => {
 		return await fetch(baseURL + "torrents/delete", {
@@ -119,7 +119,7 @@ export const torrentApi = {
 			body: `hashes=${hash}&deleteFiles=${deleteFiles}`,
 			credentials: "include",
 		});
-	},
+	}, //NOT
 
 	getCategories: async (): Promise<TorrCategories> => {
 		return (await fetch(baseURL + "torrents/categories", {
@@ -131,7 +131,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<TorrCategories>;
-	},
+	}, //TESTED
 
 	addCategory: async (name: string, path: string) => {
 		return (await fetch(baseURL + "torrents/createCategory", {
@@ -145,7 +145,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<string>;
-	},
+	}, //NOT
 
 	removeCategories: async (category: string) => {
 		return (await fetch(baseURL + "torrents/removeCategories", {
@@ -159,7 +159,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<string>;
-	},
+	}, //NOT
 
 	getTags: async (): Promise<TorrCategories> => {
 		return (await fetch(baseURL + "torrents/tags", {
@@ -171,16 +171,41 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		})) as Promise<TorrCategories>;
-	},
+	}, //TESTED
 
-	addTorrent: async (file: string) => {
-		await fetch(baseURL + "torrents/add", {
-			method: "POST",
-			body: `torrents=${file}`,
-			credentials: "include",
+	addTorrent: async (fileList: FileList) => {
+		
+		// data.append('torrents', fileList.file.item(0))
+		// fileList.file
+		// 	.item(0)
+		// 	.arrayBuffer()
+		// 	.then((binaryData) => {
+		// 		const data = new FormData()
+		// 		data.append('torrents', binaryData)
+		// 	})
+		// 	.then((data) => fetch(baseURL + "torrents/add", {
+		// 		method: "POST",
+		// 		body: data,
+		// 		credentials: "include",
+		// 		headers: {
+		// 			'Content-Type': 'multipart/form-data'
+		// 		}
+		// 		}).then((response) => {
+		// 			console.log(response);
+		// 		}))
+		const formData = new FormData()
+
+		Array.from(fileList.file).map((torrent) => {
+			formData.append("torrents", torrent)
+		})
+
+		return await fetch(baseURL + "torrents/add", {
+		method: "POST",
+		body: formData,
+		credentials: "include",
 		}).then((response) => {
 			console.log(response);
-		});
+		})
 	},
 
 	// getSettings: async (): Promise<TorrSettings> => {

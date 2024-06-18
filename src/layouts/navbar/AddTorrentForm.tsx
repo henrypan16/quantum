@@ -1,19 +1,20 @@
 import { useState, useRef } from "react";
-// import { useMutation } from "@tanstack/react-query";
-// import { torrentApi } from "../../utils/torrentApi.ts";
+import { useMutation } from "@tanstack/react-query";
+import { torrentApi } from "../../utils/torrentApi.ts";
 import { AiOutlineClose } from "react-icons/ai";
+import React from 'react'
 
-export const AddTorrentForm = () => {
-	// const torrent = useMutation({
-	// 	mutationKey: ["torrent"],
-	// 	mutationFn: torrentApi.addTorrent,
-	// });
+export const AddTorrentForm = ({submitRef}: {submitRef: RefObject}) => {
+	const torrent = useMutation({
+		mutationKey: ["torrent"],
+		mutationFn: torrentApi.addTorrent,
+	});
 	const itemsRef = useRef();
 	const [torrents, setTorrents] = useState<FileList>();
-
+	
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault();
-		//torrent.mutate({file: torrents})
+		torrent.mutate({file: torrents})
 	};
 
 	const remove = (index: number) => {
@@ -97,6 +98,7 @@ export const AddTorrentForm = () => {
 					</select>
 				</div>
 			</div>
+			<button type="submit" className="hidden" ref={submitRef}></button>
 		</form>
 	);
 };

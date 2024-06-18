@@ -8,10 +8,14 @@ import { Logo } from "./Logo";
 import { Plus, Pause, Start } from "../../assets/icons";
 import { useState } from "react";
 import { AddTorrentModal } from "./AddTorrentModal"
+import React from 'react'
 
 export const Navbar = () => {
-	const [isOpen, setIsOpen] = useState(false);	//State of add torrent form modal
-
+	//Do not run setIsOpen to directly manipulate the state of Modal 
+	//Because it will cause error with backdrop modal destructor
+	//Instead, pass it to Modal as a function
+	const [isOpen, setIsOpen] = useState(false);
+	
 	return (
 		<>
 			<nav className="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
@@ -26,18 +30,18 @@ export const Navbar = () => {
 						<Search />
 					</div>
 					<div className="flex justify-between items-center gap-4">
-						<button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex"
+						<button className="text-white focus:ring-2 focus:outline-none bg-blue-800 focus:ring-blue-300 dark:focus:ring-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex"
 							onClick={() => {setIsOpen(true)}}>
 							<Plus />
 							<span className="my-auto ml-1 hidden lg:block">
 								Add Torrent
 							</span>
 						</button>
-						<AddTorrentModal visible={isOpen} closeModal={() => {setIsOpen(false)}}/>
+						
 
 						<button
 							type="button"
-							className="text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex">
+							className="text-white bg-red-800 focus:ring-2 focus:outline-none focus:ring-red-300 dark:focus:ring-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex">
 							<Pause />
 							<span className="my-auto ml-1 hidden lg:block">
 								Pause
@@ -45,7 +49,7 @@ export const Navbar = () => {
 						</button>
 						<button
 							type="button"
-							className="text-white bg-gradient-to-r from-lime-500 to-emerald-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex">
+							className="text-white bg-emerald-800 focus:ring-2 focus:outline-none focus:ring-emerald-300 dark:focus:ring-emerald-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex">
 							<Start />
 							<span className="my-auto ml-1 hidden lg:block">
 								Start
@@ -62,6 +66,7 @@ export const Navbar = () => {
 					{/* <AddTorrentForm/> */}
 				</div>
 			</nav>
+			<AddTorrentModal visible={isOpen} setIsOpen={(state) => {setIsOpen(state)}}/>
 		</>
 	);
 };
