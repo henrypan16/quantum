@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const Search = () => {
 	return (
 		<form action="#" method="GET" className="hidden md:block md:pl-2">

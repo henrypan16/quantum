@@ -7,6 +7,7 @@ import { Refresh } from "../../assets/icons/Refresh";
 import { Collapse } from "../../components/ui/Collapse";
 import { useQuery } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi";
+import { Logo } from "./Logo";
 import React from 'react'
 
 export const Sidebar = () => {
@@ -24,10 +25,11 @@ export const Sidebar = () => {
 	return (
 		<>
 			<aside
-				className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 "
+				className="fixed top-0 left-0 z-40 w-64 pt-4 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 "
 				aria-label="Sidenav"
 				id="drawer-navigation">
-				<div className="overflow-y-auto py-5 px-3 h-full scrollbar bg-white dark:bg-gray-800">
+				<div className="overflow-y-auto px-3 h-full scrollbar bg-white dark:bg-gray-800">
+					<Logo />
 					<ul className="space-y-2">
 						<li>
 							<a

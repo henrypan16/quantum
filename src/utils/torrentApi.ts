@@ -19,7 +19,6 @@ export const torrentApi = {
 			if (response.status == 200) {
 				return response.text();
 			} else {
-				console.log("Error");
 				throw new Error("Error");
 			}
 		})) as Promise<number>;
@@ -174,25 +173,6 @@ export const torrentApi = {
 	}, //TESTED
 
 	addTorrent: async (fileList: FileList) => {
-		
-		// data.append('torrents', fileList.file.item(0))
-		// fileList.file
-		// 	.item(0)
-		// 	.arrayBuffer()
-		// 	.then((binaryData) => {
-		// 		const data = new FormData()
-		// 		data.append('torrents', binaryData)
-		// 	})
-		// 	.then((data) => fetch(baseURL + "torrents/add", {
-		// 		method: "POST",
-		// 		body: data,
-		// 		credentials: "include",
-		// 		headers: {
-		// 			'Content-Type': 'multipart/form-data'
-		// 		}
-		// 		}).then((response) => {
-		// 			console.log(response);
-		// 		}))
 		const formData = new FormData()
 
 		Array.from(fileList.file).map((torrent) => {
