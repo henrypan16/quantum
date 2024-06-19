@@ -7,7 +7,8 @@ import { TorrTorrentInfo } from "../../utils/types";
 import { TorrentTable } from "./TorrentTable";
 import { Toolbar } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
-
+import { useModal } from "../ui/useModal";
+import { Modal2 } from "../ui/Modal2";
 import React from "react";
 
 export const TorrentManager = () => {
@@ -43,6 +44,8 @@ export const TorrentManager = () => {
 	//Because it will cause error with backdrop modal destructor
 	//Instead, pass it to Modal as a function
 	const [isOpen, setIsOpen] = useState();
+	const {modalId, modalRef, hide, show} = useModal();
+	
 
 	//Use useMemo to prevent re-rendering of AddTorrentModal
 	//Which will cause a bug with backdrop modal destructor
@@ -67,7 +70,7 @@ export const TorrentManager = () => {
 			<Toolbar
 				setIsOpen={setIsOpen}
 				setSearchString={setSearchString}
-				test={searchString}
+				test={() => show()}
 			/>
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar">
 				{isLoading ? (
@@ -92,6 +95,7 @@ export const TorrentManager = () => {
 				)}
 			</div>
 			{addTorrentModal}
+			<Modal2 modalId={modalId} modalRef={modalRef}/>
 		</main>
 	);
 };

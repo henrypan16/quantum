@@ -29,7 +29,7 @@ export const Toolbar = ({ setIsOpen, test, setSearchString }: ToolbarProps) => {
 				type="button"
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
 				onClick={() => {
-					console.log(test);
+					test()
 				}}>
 				<FiPauseCircle />
 			</button>
