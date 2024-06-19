@@ -1,18 +1,11 @@
-import { Modal as FlowbiteModal } from "flowbite";
-import type { ModalOptions } from "flowbite";
-import {
-	useRef,
-	useEffect,
-	useId,
-	forwardRef,
-	useImperativeHandle,
-} from "react";
 import React from "react";
 
 export interface ModalProps {
-	visible: bool;
 	children: React.Node;
-	setIsOpen: (state: bool) => void;
+	modalId: string;
+	modalRef: React.RefObject<HTMLDivElement>;
+	show: () => void;
+	hide: () => void;
 }
 
 const Header = ({ children }: { children: React.Node }) => (
@@ -31,54 +24,7 @@ const Footer = ({ children }: { children: React.Node }) => (
 	</div>
 );
 
-//Pass in a ref as a props to gain access to child function
-//Ex1: Parent component have access to hide & show
-//     <Modal {...props} ref={parentRef}></Modal>
-//Ex2: Parent component does not have access to hide & show
-//     <Modal {...props}></Modal>
-export const Modal = forwardRef(function Modal(
-	{ visible, children, setIsOpen }: ModalProps,
-	modalRef,
-) {
-	if (!modalRef) {
-		modalRef = useRef();
-	}
-
-	const modalId = useId();
-
-	useEffect(() => {
-		const modalElement: HTMLElement = document.getElementById(modalId);
-
-		const modalOptions: ModalOptions = {
-			placement: "center",
-			backdrop: "dynamic",
-			backdropClasses:
-				"bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
-			closable: true,
-			onHide: () => setIsOpen(false),
-		};
-
-		modalRef.current = new FlowbiteModal(modalElement, modalOptions);
-	}, [modalId, setIsOpen]);
-
-	useEffect(() => {
-		if (visible) {
-			modalRef.current.show();
-		} else {
-			modalRef.current.hide();
-		}
-	}, [visible]);
-
-	useImperativeHandle(modalRef, () => ({
-		hide() {
-			modalRef.current.hide();
-		},
-
-		show() {
-			modalRef.current.show();
-		},
-	}));
-
+export const Modal = ({ children, modalId, modalRef, hide }: ModalProps) => {
 	return (
 		<div
 			id={modalId}
@@ -90,7 +36,7 @@ export const Modal = forwardRef(function Modal(
 					<button
 						className="absolute right-2 top-2  text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
 						onClick={() => {
-							modalRef.current.hide();
+							hide();
 						}}>
 						<svg
 							className="w-3 h-3"
@@ -113,7 +59,7 @@ export const Modal = forwardRef(function Modal(
 			</div>
 		</div>
 	);
-});
+};
 
 Modal.Header = Header;
 Modal.Body = Body;

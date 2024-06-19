@@ -1,25 +1,25 @@
-import {useEffect, useRef, useId, useState} from "react";
+import { useEffect, useRef, useId, useState } from "react";
 import { Modal } from "flowbite";
 
 export const useModal = () => {
-    const modalRef = useRef();
-    const modalId = useId();
-    const [isOpen, setIsOpen] = useState(false);
+	const modalRef = useRef();
+	const modalId = useId();
+	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-        const modalElement: HTMLElement = document.getElementById(modalId);
+		const modalElement: HTMLElement = document.getElementById(modalId);
 
-        const modalOptions: ModalOptions = {
-            placement: "center",
-            backdrop: "dynamic",
-            backdropClasses:
-                "bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
-            closable: true,
-            onHide: () => setIsOpen(false),
-        };
+		const modalOptions: ModalOptions = {
+			placement: "center",
+			backdrop: "dynamic",
+			backdropClasses:
+				"bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40",
+			closable: true,
+			onHide: () => setIsOpen(false),
+		};
 
-        modalRef.current = new Modal(modalElement, modalOptions);
-    }, [modalId, setIsOpen]);
+		modalRef.current = new Modal(modalElement, modalOptions);
+	}, [modalId, setIsOpen]);
 
 	useEffect(() => {
 		if (isOpen) {
@@ -29,14 +29,14 @@ export const useModal = () => {
 		}
 	}, [isOpen]);
 
-    return {
-        hide() {
-            modalRef.current.hide();
-        },
-        show() {
-            modalRef.current.show();
-        },
-        modalRef,
-        modalId
-    }
-}
+	return {
+		hide() {
+			modalRef.current.hide();
+		},
+		show() {
+			modalRef.current.show();
+		},
+		modalRef,
+		modalId,
+	};
+};

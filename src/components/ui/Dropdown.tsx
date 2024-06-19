@@ -1,68 +1,42 @@
-import { useRef, useEffect } from "react";
-import { Dropdown as FlowbiteDropdown } from "flowbite";
+import { FiChevronDown } from "react-icons/fi";
+import React, { memo } from "react";
 
-interface RefObject {
-	current: {
-		toggle: () => void;
-	};
-}
-
-interface DropdownButtonProps {
-	children: React.ReactNode;
-	icon: React.ReactNode;
+interface DropdownProps {
 	menu: string;
-	toggle: string;
+	button: string;
 	title: string;
+	items: string[];
 }
 
-export const Dropdown = ({
-	children,
+export const Dropdown = memo(function Dropdown({
 	menu,
-	toggle,
+	button,
 	title,
-	icon,
-}: DropdownButtonProps) => {
-	const dropdown: RefObject = useRef<HtmlDivElement>();
-
-	useEffect(() => {
-		// set the dropdown menu element
-		const targetEl = document.getElementById(menu);
-
-		// set the element that trigger the dropdown menu on click
-		const triggerEl = document.getElementById(toggle);
-
-		const options = {
-			placement: "bottom",
-			triggerType: "click",
-			offsetSkidding: 0,
-			offsetDistance: 10,
-			delay: 300,
-			ignoreClickOutsideClass: false,
-		};
-
-		dropdown.current = new FlowbiteDropdown(targetEl, triggerEl, options);
-	});
-
+	items,
+}: DropdownProps) {
 	return (
 		<>
 			{/* Dropdown Button */}
 			<button
 				type="button"
-				id={toggle}
-				className="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
-				<span className="sr-only">View {menu}</span>
-				{icon}
+				id={button}
+				className="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-1 focus:ring-gray-200 dark:focus:ring-gray-600 border border-gray-600 flex gap-2 items-center">
+				<span className="">{title}</span>
+				<FiChevronDown />
 			</button>
 
 			{/* Dropdown Menu */}
 			<div
-				className="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 rounded-xl"
+				className="hidden overflow-hidden z-50 my-4 max-w-sm text-base border-gray-600 list-none bg-white divide-y divide-gray-100 shadow-lg dark:divide-gray-600"
 				id={menu}>
-				<div className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
-					{title}
-				</div>
-				{children}
+				{items.map((item, i) => (
+					<div
+						key={i}
+						className="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-50 dark:bg-gray-600 dark:text-gray-300">
+						{item}
+					</div>
+				))}
 			</div>
 		</>
 	);
-};
+});

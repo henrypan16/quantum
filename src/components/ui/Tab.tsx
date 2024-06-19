@@ -1,3 +1,5 @@
+import React from "react";
+
 interface TabProps {
 	title: string;
 	click: (id: number) => void;

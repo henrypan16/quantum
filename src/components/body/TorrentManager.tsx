@@ -1,5 +1,5 @@
 import { torrentApi } from "../../utils/torrentApi";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Info } from "../Info";
 import { useQuery } from "@tanstack/react-query";
 import { Loading } from "../ui/Loading";
@@ -8,12 +8,17 @@ import { TorrentTable } from "./TorrentTable";
 import { Toolbar } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
 import { useModal } from "../ui/useModal";
-import { Modal2 } from "../ui/Modal2";
+import stateDictionary from "../../utils/StateDictionary";
 import React from "react";
 
 export const TorrentManager = () => {
 	const [selectedItem, setSelectedItem] = useState(0);
 	const [searchString, setSearchString] = useState("");
+	const [filter, setFilter] = useState({
+		status: "Status",
+		categories: "Categories",
+		tags: "Tags",
+	});
 
 	const { data, isLoading, isFetching }: { data: TorrTorrentInfo[] } =
 		useQuery({
@@ -21,6 +26,17 @@ export const TorrentManager = () => {
 			queryFn: torrentApi.getTorrents,
 			refetchInterval: 5000,
 		});
+
+	const categories: { data: { id: { name: string; savePath: string } } } =
+		useQuery({
+			queryKey: ["categories"],
+			queryFn: torrentApi.getCategories,
+		});
+
+	const tags: { data: { id: { name: string } } } = useQuery({
+		queryKey: ["tags"],
+		queryFn: torrentApi.getTags,
+	});
 
 	const [torrentData, setTorrentData] = useState();
 
@@ -40,38 +56,55 @@ export const TorrentManager = () => {
 		}
 	}, [searchString, isFetching]);
 
-	//Do not run setIsOpen to directly manipulate the state of Modal
-	//Because it will cause error with backdrop modal destructor
-	//Instead, pass it to Modal as a function
-	const [isOpen, setIsOpen] = useState();
-	const {modalId, modalRef, hide, show} = useModal();
-	
+	useEffect(() => {
+		if (!isLoading) {
+			setTorrentData(
+				data.filter((torrent) => {
+					const statusCondition =
+						filter.status === "Status" ||
+						filter.status === "All" ||
+						stateDictionary[torrent.state].short === filter.status;
+					const categoriesCondition =
+						filter.categories === "Categories" ||
+						filter.categories === "All" ||
+						torrent.category === filter.categories;
+					const tagsCondition =
+						filter.tags === "Tags" ||
+						filter.tags === "All" ||
+						torrent.tags.includes(filter.tags);
 
-	//Use useMemo to prevent re-rendering of AddTorrentModal
-	//Which will cause a bug with backdrop modal destructor
-	const addTorrentModal = useMemo(
-		() => (
-			<AddTorrentModal
-				visible={isOpen}
-				setIsOpen={(state) => {
-					setIsOpen(state);
-				}}
-			/>
-		),
-		[isOpen],
-	);
+					return (
+						statusCondition && categoriesCondition && tagsCondition
+					);
+				}),
+			);
+		}
+	}, [filter, isFetching, data]);
+
+	//{modalId, modalRef, hide, show}
+	const { modalId, modalRef, hide, show } = useModal();
 
 	const itemClick = (index: number) => {
 		setSelectedItem(index);
 	};
 
 	return (
-		<main className="p-4 pb-0 md:pt-4 pt-12 md:ml-64 h-screen pt-1 relative flex flex-col gap-4">
+		<main className="p-4 pb-0 md:pt-4 pt-12 md:ml-64 h-screen relative flex flex-col gap-4">
 			<Toolbar
-				setIsOpen={setIsOpen}
+				show={show}
 				setSearchString={setSearchString}
-				test={() => show()}
+				test={() => {}}
+				status={Object.values(stateDictionary).map(
+					(item) => item.short,
+				)}
+				categories={
+					!categories.isLoading && Object.keys(categories.data)
+				}
+				tags={!tags.isLoading && tags.data}
+				filter={filter}
+				setFilter={setFilter}
 			/>
+
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar">
 				{isLoading ? (
 					<Loading />
@@ -94,8 +127,12 @@ export const TorrentManager = () => {
 					<Info torrent={data[selectedItem]} />
 				)}
 			</div>
-			{addTorrentModal}
-			<Modal2 modalId={modalId} modalRef={modalRef}/>
+			<AddTorrentModal
+				modalId={modalId}
+				modalRef={modalRef}
+				hide={hide}
+				show={show}
+			/>
 		</main>
 	);
 };
