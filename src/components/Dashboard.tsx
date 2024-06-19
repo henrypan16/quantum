@@ -1,12 +1,13 @@
 import { MainLayout } from "../layouts/MainLayout";
-import { Body } from "../components/body/Body";
+import { TorrentManager } from "../components/body/TorrentManager";
+import React from "react";
 
 export const Dashboard = () => {
 	return (
 		<div>
 			<div className="antialiased bg-gray-50 dark:bg-gray-900">
 				<MainLayout>
-					<Body />
+					<TorrentManager />
 				</MainLayout>
 			</div>
 		</div>

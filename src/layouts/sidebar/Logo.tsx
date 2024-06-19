@@ -4,7 +4,7 @@ export const Logo = () => {
 	return (
 		<a
 			href="/"
-			className="flex items-center bg-gradient-to-r from-sky-100 to-sky-300 bg-clip-text mb-6">
+			className="flex items-center bg-gradient-to-r from-sky-100 to-sky-300 bg-clip-text md:mb-6">
 			<svg
 				className="w-[40px] h-[40px] text-sky-200"
 				aria-hidden="true"

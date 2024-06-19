@@ -173,19 +173,19 @@ export const torrentApi = {
 	}, //TESTED
 
 	addTorrent: async (fileList: FileList) => {
-		const formData = new FormData()
+		const formData = new FormData();
 
 		Array.from(fileList.file).map((torrent) => {
-			formData.append("torrents", torrent)
-		})
+			formData.append("torrents", torrent);
+		});
 
 		return await fetch(baseURL + "torrents/add", {
-		method: "POST",
-		body: formData,
-		credentials: "include",
+			method: "POST",
+			body: formData,
+			credentials: "include",
 		}).then((response) => {
 			console.log(response);
-		})
+		});
 	},
 
 	// getSettings: async (): Promise<TorrSettings> => {

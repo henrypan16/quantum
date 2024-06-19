@@ -1,5 +1,5 @@
 import { Modal as FlowbiteModal } from "flowbite";
-import type { ModalOptions, InstanceOptions } from "flowbite";
+import type { ModalOptions } from "flowbite";
 import {
 	useRef,
 	useEffect,
@@ -58,16 +58,7 @@ export const Modal = forwardRef(function Modal(
 			onHide: () => setIsOpen(false),
 		};
 
-		const instanceOptions: InstanceOptions = {
-			id: { modalId },
-			override: true,
-		};
-
-		modalRef.current = new FlowbiteModal(
-			modalElement,
-			modalOptions,
-			instanceOptions,
-		);
+		modalRef.current = new FlowbiteModal(modalElement, modalOptions);
 	}, [modalId, setIsOpen]);
 
 	useEffect(() => {
@@ -93,7 +84,6 @@ export const Modal = forwardRef(function Modal(
 			id={modalId}
 			ref={modalRef}
 			tabIndex="-1"
-			aria-hidden="true"
 			className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 			<div className="relative p-4 w-full max-w-2xl max-h-full">
 				<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">

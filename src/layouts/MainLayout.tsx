@@ -6,6 +6,7 @@ import React from "react";
 export const MainLayout = ({ children }: { children: ReactNode }) => {
 	return (
 		<div>
+			<Navbar />
 			<Sidebar />
 			{children}
 		</div>
