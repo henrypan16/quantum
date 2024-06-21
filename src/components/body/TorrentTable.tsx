@@ -1,9 +1,7 @@
-import React from "react";
 import { convertTorrentInfo } from "../../utils/convert";
 import { TorrTorrentInfo } from "../../utils/types";
 
 interface TorrentTableProps {
-	header: string[];
 	data: TorrTorrentInfo[];
 	selectedItem: number;
 	itemClick: (index: number) => void;
@@ -29,7 +27,7 @@ export const TorrentTable = ({
 		"Time",
 	];
 
-	const addTextColor = (status) => {
+	const addTextColor = (status : string) : string => {
 		switch (status) {
 			case "stalledDL":
 			case "downloading":

@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 import { Tab } from "../components/ui/Tab";
 import { General } from "./Info/General";
 import { TorrTorrentInfo } from "../utils/types.ts";
+
+interface TabInterface {
+	id: number;
+	title: string;
+}
 
 export const Info = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 	const [selectedTab, setSelectedTab] = useState(1);
@@ -28,7 +33,7 @@ export const Info = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 		},
 	];
 
-	const changeTab = (tab) => {
+	const changeTab = (tab : number) => {
 		switch (tab) {
 			case 1:
 				return <General torrent={torrent} />;
@@ -46,7 +51,7 @@ export const Info = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 	return (
 		<>
 			<ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-t bg-gray-900 border-none border-gray-200 dark:border-gray-700 border-0 dark:text-gray-400">
-				{tabs.map((tab) => (
+				{tabs.map((tab : TabInterface) : ReactElement => (
 					<Tab
 						key={tab.id}
 						title={tab.title}

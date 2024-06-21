@@ -1,8 +1,8 @@
 import { useRef, useEffect, useId, useCallback } from "react";
-import { Dropdown } from "flowbite";
+import { Dropdown, DropdownOptions, DropdownInterface } from "flowbite";
 
 export const useDropdown = () => {
-	const dropdown: RefObject = useRef<HtmlDivElement>();
+	const dropdown = useRef<DropdownInterface | null>(null);
 	const dropdownMenuId = useId();
 	const dropdownToggleId = useId();
 
@@ -13,7 +13,7 @@ export const useDropdown = () => {
 		// set the element that trigger the dropdown menu on click
 		const triggerEl = document.getElementById(dropdownToggleId);
 
-		const options = {
+		const options : DropdownOptions = {
 			placement: "bottom-start",
 			triggerType: "click",
 			offsetSkidding: 0,

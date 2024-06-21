@@ -1,5 +1,5 @@
 import { FiChevronDown } from "react-icons/fi";
-import React, { memo } from "react";
+import { memo } from "react";
 
 interface DropdownProps {
 	menu: string;

@@ -1,6 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-import { useFilterStateReturn } from "./components/Filters";
-
 export type TorrCategories = {
 	[i: string]: TorrCategory;
 };
@@ -393,12 +390,6 @@ export type TorrSettings = {
 	web_ui_reverse_proxies_list: string;
 };
 
-export type SearchProviderComponentProps = {
-	category: string;
-	searchState: [string, Dispatch<SetStateAction<string>>];
-	filterState: useFilterStateReturn;
-	onSearch?: () => void;
-};
 
 export interface YTSTorrent {
 	size_bytes: number;

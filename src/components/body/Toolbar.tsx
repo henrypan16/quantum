@@ -9,14 +9,16 @@ import {
 	FiPlayCircle,
 	FiTrash2,
 } from "react-icons/fi";
+interface TagInterface {
+	[key: string]: string;
+}
 
-interface ToolbarProps {
+export interface ToolbarProps {
 	show: () => void;
-	test: string;
 	setSearchString: (state: string) => void;
 	status: string[];
-	categories: string[];
-	tags: string[];
+	categories: {[key: string]: string} | false | undefined;
+	tags: TagInterface | false | undefined;
 	filter: { status: string; categories: string; tags: string };
 	setFilter: (obj: {
 		status: string;
@@ -27,7 +29,6 @@ interface ToolbarProps {
 
 export const Toolbar = ({
 	show,
-	test,
 	setSearchString,
 	status,
 	categories,
@@ -47,9 +48,7 @@ export const Toolbar = ({
 			<button
 				type="button"
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
-				onClick={() => {
-					test();
-				}}>
+				>
 				<FiPauseCircle />
 			</button>
 			<button

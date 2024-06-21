@@ -1,8 +1,7 @@
 import { TorrTorrentInfo } from "../utils/types";
 import stateDictionary from "./StateDictionary";
-import React from "react";
 
-const Progress = ({ percentage }: { percentage: string }) => {
+const Progress = ({ percentage }: { percentage: number }) => {
 	return (
 		<div className="w-full bg-gray-200 rounded-full dark:bg-gray-700">
 			<div

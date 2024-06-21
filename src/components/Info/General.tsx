@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi";
 import { TransferInfo } from "./TransferInfo";
 import { TorrTorrentInfo } from "../../utils/types";
 import { intToSize, intToSpeed, secToTime } from "../../utils/convert";
-import React from "react";
 
 export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
-	const { data, isPending, isError }: { data: TorrTorrentInfo } = useQuery({
+	const { data, isPending, isError }: UseQueryResult<TorrTorrentInfo | null, Error> = useQuery({
 		queryKey: ["torrent", torrent.hash],
 		queryFn: () => torrentApi.getProperties(torrent.hash),
 	});
@@ -94,7 +93,7 @@ export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 							<div className="grid grid-cols-12">
 								<TransferInfo
 									label="Connection"
-									value={`${data.nb_connections} (${data.nb_connections_limit})`}
+									value={`${data?.nb_connections} (${data?.nb_connections_limit})`}
 								/>
 								<TransferInfo
 									label="Seeds"
@@ -102,15 +101,15 @@ export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 								/>
 								<TransferInfo
 									label="Peers"
-									value={data.peers}
+									value={data?.peers}
 								/>
 								<TransferInfo
 									label="Wasted"
-									value={intToSize(data.total_wasted)}
+									value={intToSize(parseInt(data?.total_wasted || "0"))}
 								/>
 								<TransferInfo
 									label="Last Seen Complete"
-									value={data.last_seen}
+									value={data?.last_seen}
 								/>
 							</div>
 						</div>

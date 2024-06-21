@@ -3,7 +3,7 @@ export const TransferInfo = ({
 	value,
 }: {
 	label: string;
-	value: string;
+	value: string | number | null | undefined;
 }) => {
 	return (
 		<>

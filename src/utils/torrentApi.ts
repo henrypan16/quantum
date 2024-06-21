@@ -1,3 +1,5 @@
+import { TorrCategories } from "../utils/types";
+
 let serverAddress = "/";
 
 if (serverAddress.substring(serverAddress.length - 1) !== "/") {
@@ -13,7 +15,7 @@ interface Credential {
 
 export const torrentApi = {
 	getVersion: async () => {
-		return (await fetch(baseURL + "app/version", {
+		return await fetch(baseURL + "app/version", {
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
@@ -21,7 +23,7 @@ export const torrentApi = {
 			} else {
 				throw new Error("Error");
 			}
-		})) as Promise<number>;
+		});
 	}, //TESTED
 
 	login: async ({ username, password }: Credential) => {
@@ -68,17 +70,17 @@ export const torrentApi = {
 		})) as Promise<JSON>;
 	}, //TESTED
 
-	sync: async (rid: number): Promise<TorrMainData> => {
-		const url = new URL(baseURL + "sync/maindata");
-		url.search = new URLSearchParams({
-			rid: rid,
-		});
-		const data = await fetch(url, {
-			credentials: "include",
-		});
+	// sync: async (rid: number): Promise<TorrMainData> => {
+	// 	const url = new URL(baseURL + "sync/maindata");
+	// 	url.search = new URLSearchParams({
+	// 		rid: rid,
+	// 	});
+	// 	const data = await fetch(url, {
+	// 		credentials: "include",
+	// 	});
 
-		return data;
-	}, //NOT
+	// 	return data;
+	// }, //NOT
 
 	resume: async (hash = "") => {
 		return await fetch(baseURL + "torrents/resume", {
@@ -112,13 +114,13 @@ export const torrentApi = {
 		});
 	}, //NOT
 
-	remove: async (hash = "", deleteFiles = "false") => {
-		return await fetch(baseURL + "torrents/delete", {
-			method: "POST",
-			body: `hashes=${hash}&deleteFiles=${deleteFiles}`,
-			credentials: "include",
-		});
-	}, //NOT
+	// remove: async (hash = "", deleteFiles = "false") => {
+	// 	return await fetch(baseURL + "torrents/delete", {
+	// 		method: "POST",
+	// 		body: `hashes=${hash}&deleteFiles=${deleteFiles}`,
+	// 		credentials: "include",
+	// 	});
+	// }, //NOT
 
 	getCategories: async (): Promise<TorrCategories> => {
 		return (await fetch(baseURL + "torrents/categories", {
@@ -132,33 +134,33 @@ export const torrentApi = {
 		})) as Promise<TorrCategories>;
 	}, //TESTED
 
-	addCategory: async (name: string, path: string) => {
-		return (await fetch(baseURL + "torrents/createCategory", {
-			method: "POST",
-			body: `category=${name}&savePath=${path}`,
-			credentials: "include",
-		}).then((response) => {
-			if (response.status == 200) {
-				return response.status;
-			} else {
-				throw new Error("Error");
-			}
-		})) as Promise<string>;
-	}, //NOT
+	// addCategory: async (name: string, path: string) => {
+	// 	return (await fetch(baseURL + "torrents/createCategory", {
+	// 		method: "POST",
+	// 		body: `category=${name}&savePath=${path}`,
+	// 		credentials: "include",
+	// 	}).then((response) => {
+	// 		if (response.status == 200) {
+	// 			return response.status;
+	// 		} else {
+	// 			throw new Error("Error");
+	// 		}
+	// 	})) as Promise<string>;
+	// }, //NOT
 
-	removeCategories: async (category: string) => {
-		return (await fetch(baseURL + "torrents/removeCategories", {
-			method: "POST",
-			body: `categories=${category}`,
-			credentials: "include",
-		}).then((response) => {
-			if (response.status == 200) {
-				return response.status;
-			} else {
-				throw new Error("Error");
-			}
-		})) as Promise<string>;
-	}, //NOT
+	// removeCategories: async (category: string) => {
+	// 	return (await fetch(baseURL + "torrents/removeCategories", {
+	// 		method: "POST",
+	// 		body: `categories=${category}`,
+	// 		credentials: "include",
+	// 	}).then((response) => {
+	// 		if (response.status == 200) {
+	// 			return response.status;
+	// 		} else {
+	// 			throw new Error("Error");
+	// 		}
+	// 	})) as Promise<string>;
+	// }, //NOT
 
 	getTags: async (): Promise<TorrCategories> => {
 		return (await fetch(baseURL + "torrents/tags", {
@@ -172,10 +174,10 @@ export const torrentApi = {
 		})) as Promise<TorrCategories>;
 	}, //TESTED
 
-	addTorrent: async (fileList: FileList) => {
+	addTorrent: async (fileList : {file: FileList}) => {
 		const formData = new FormData();
-
-		Array.from(fileList.file).map((torrent) => {
+		console.log(fileList)
+		Array.from(fileList.file).map((torrent: Blob) => {
 			formData.append("torrents", torrent);
 		});
 

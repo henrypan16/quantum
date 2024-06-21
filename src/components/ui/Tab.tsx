@@ -1,6 +1,4 @@
-import React from "react";
-
-interface TabProps {
+export interface TabProps {
 	title: string;
 	click: (id: number) => void;
 	selected: boolean;

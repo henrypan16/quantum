@@ -1,13 +1,13 @@
 import { useEffect, useRef, useId, useState } from "react";
-import { Modal } from "flowbite";
+import { Modal, ModalInterface, ModalOptions  } from "flowbite";
 
 export const useModal = () => {
-	const modalRef = useRef();
+	const modalRef = useRef<ModalInterface>();
 	const modalId = useId();
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		const modalElement: HTMLElement = document.getElementById(modalId);
+		const modalElement: HTMLElement | null = document.getElementById(modalId);
 
 		const modalOptions: ModalOptions = {
 			placement: "center",
@@ -18,25 +18,24 @@ export const useModal = () => {
 			onHide: () => setIsOpen(false),
 		};
 
-		modalRef.current = new Modal(modalElement, modalOptions);
+		modalRef.current  = new Modal(modalElement, modalOptions);
 	}, [modalId, setIsOpen]);
 
 	useEffect(() => {
 		if (isOpen) {
-			modalRef.current.show();
+			modalRef.current?.show();
 		} else {
-			modalRef.current.hide();
+			modalRef.current?.hide();
 		}
 	}, [isOpen]);
 
 	return {
 		hide() {
-			modalRef.current.hide();
+			modalRef.current?.hide();
 		},
 		show() {
-			modalRef.current.show();
+			modalRef.current?.show();
 		},
-		modalRef,
 		modalId,
 	};
 };

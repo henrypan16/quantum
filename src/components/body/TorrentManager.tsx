@@ -1,44 +1,59 @@
 import { torrentApi } from "../../utils/torrentApi";
 import { useState, useEffect } from "react";
 import { Info } from "../Info";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Loading } from "../ui/Loading";
 import { TorrTorrentInfo } from "../../utils/types";
 import { TorrentTable } from "./TorrentTable";
-import { Toolbar } from "./Toolbar";
+import { Toolbar, ToolbarProps } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
 import { useModal } from "../ui/useModal";
 import stateDictionary from "../../utils/StateDictionary";
 import React from "react";
 
+interface QueryProps {
+	data: TorrTorrentInfo[],
+	isLoading: boolean,
+	isFetching: boolean,
+	isError: boolean,
+}
+interface FilterInterface {
+	status: string;
+	categories: string;
+	tags: string;
+}
+interface TagInterface {
+	[key: string]: string;
+}
+
 export const TorrentManager = () => {
 	const [selectedItem, setSelectedItem] = useState(0);
 	const [searchString, setSearchString] = useState("");
-	const [filter, setFilter] = useState({
+	const [filter, setFilter] = useState<FilterInterface>({
 		status: "Status",
 		categories: "Categories",
 		tags: "Tags",
 	});
 
-	const { data, isLoading, isFetching }: { data: TorrTorrentInfo[] } =
+	const { data, isLoading, isFetching }: QueryProps =
 		useQuery({
 			queryKey: ["torrents", "all"],
 			queryFn: torrentApi.getTorrents,
 			refetchInterval: 5000,
 		});
 
-	const categories: { data: { id: { name: string; savePath: string } } } =
+	const categories: UseQueryResult<TagInterface, Error> =
 		useQuery({
 			queryKey: ["categories"],
 			queryFn: torrentApi.getCategories,
 		});
 
-	const tags: { data: { id: { name: string } } } = useQuery({
+	const tags: UseQueryResult<TagInterface, Error> = useQuery({
 		queryKey: ["tags"],
 		queryFn: torrentApi.getTags,
 	});
 
-	const [torrentData, setTorrentData] = useState();
+	const [torrentData, setTorrentData] = useState<TorrTorrentInfo[]>();
 
 	useEffect(() => {
 		if (!isLoading) {
@@ -82,27 +97,28 @@ export const TorrentManager = () => {
 	}, [filter, isFetching, data]);
 
 	//{modalId, modalRef, hide, show}
-	const { modalId, modalRef, hide, show } = useModal();
+	const modal = useModal();
 
 	const itemClick = (index: number) => {
 		setSelectedItem(index);
 	};
 
+	const toolBarProps: ToolbarProps = {
+		show: modal.show,
+		setSearchString: setSearchString,
+		status: Object.values(stateDictionary).map(
+			(item) => item.short,
+		),
+		categories: !categories.isLoading && Object.keys(categories.data),
+		tags: !tags.isLoading && tags.data,
+		filter: filter,
+		setFilter: setFilter
+	}
+
 	return (
 		<main className="p-4 pb-0 md:pt-4 pt-12 md:ml-64 h-screen relative flex flex-col gap-4">
 			<Toolbar
-				show={show}
-				setSearchString={setSearchString}
-				test={() => {}}
-				status={Object.values(stateDictionary).map(
-					(item) => item.short,
-				)}
-				categories={
-					!categories.isLoading && Object.keys(categories.data)
-				}
-				tags={!tags.isLoading && tags.data}
-				filter={filter}
-				setFilter={setFilter}
+				{...toolBarProps}
 			/>
 
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar">
@@ -128,10 +144,7 @@ export const TorrentManager = () => {
 				)}
 			</div>
 			<AddTorrentModal
-				modalId={modalId}
-				modalRef={modalRef}
-				hide={hide}
-				show={show}
+				modal={modal}
 			/>
 		</main>
 	);

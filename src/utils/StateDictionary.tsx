@@ -1,4 +1,4 @@
-import { TorrTorrentInfoStateUnion } from "../types";
+import { TorrTorrentInfoStateUnion } from "./types";
 
 const stateDictionary: {
 	[i in TorrTorrentInfoStateUnion]: { long: string; short: string };

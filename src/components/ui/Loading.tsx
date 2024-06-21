@@ -1,5 +1,3 @@
-import React from "react";
-
 export const Loading = () => {
 	return (
 		<div className="text-center h-full p-40">

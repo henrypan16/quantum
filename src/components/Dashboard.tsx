@@ -1,6 +1,5 @@
 import { MainLayout } from "../layouts/MainLayout";
 import { TorrentManager } from "../components/body/TorrentManager";
-import React from "react";
 
 export const Dashboard = () => {
 	return (

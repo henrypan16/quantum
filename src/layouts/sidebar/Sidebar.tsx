@@ -1,26 +1,7 @@
-import { Status } from "../../utils/status";
-import Clipboard from "../../assets/icons/Clipboard";
-import { PieChart } from "../../assets/icons/PieChart";
-import { Tag } from "../../assets/icons/Tag";
-import { CreateCollapse } from "../../components/ui/CreateCollapse";
-import { Refresh } from "../../assets/icons/Refresh";
-import { Collapse } from "../../components/ui/Collapse";
-import { useQuery } from "@tanstack/react-query";
-import { torrentApi } from "../../utils/torrentApi";
+
 import { Logo } from "./Logo";
-import React from "react";
 
 export const Sidebar = () => {
-	const categories: { data: { id: { name: string; savePath: string } } } =
-		useQuery({
-			queryKey: ["categories"],
-			queryFn: torrentApi.getCategories,
-		});
-
-	const tags: { data: { id: { name: string } } } = useQuery({
-		queryKey: ["tags"],
-		queryFn: torrentApi.getTags,
-	});
 
 	return (
 		<>
@@ -35,56 +16,10 @@ export const Sidebar = () => {
 							<a
 								href="#"
 								className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-								<PieChart />
 								<span className="ml-3">Overview</span>
 							</a>
 						</li>
 
-						<li>
-							<CreateCollapse
-								ids={["status", "categories", "tags"]}>
-								<Collapse
-									list={Status}
-									id="status"
-									icon={<Refresh />}
-								/>
-								<Collapse
-									list={
-										!categories.isPending
-											? [
-													...Object.keys(
-														categories.data,
-													).map((item) => ({
-														name: item,
-													})),
-													{ name: "all" },
-													{ name: "uncategorized" },
-												]
-											: []
-									}
-									id="categories"
-									icon={<Clipboard />}
-								/>
-
-								<Collapse
-									list={
-										!tags.isPending
-											? [
-													...Object.values(
-														tags.data,
-													).map((item) => ({
-														name: item,
-													})),
-													{ name: "all" },
-													{ name: "uncategorized" },
-												]
-											: []
-									}
-									id="tags"
-									icon={<Tag />}
-								/>
-							</CreateCollapse>
-						</li>
 					</ul>
 				</div>
 			</aside>

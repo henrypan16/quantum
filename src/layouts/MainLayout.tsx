@@ -1,9 +1,8 @@
 import { Navbar } from "./navbar/Navbar";
 import { Sidebar } from "./sidebar/Sidebar";
-import { ReactNode } from "react";
-import React from "react";
+import { ReactElement } from "react";
 
-export const MainLayout = ({ children }: { children: ReactNode }) => {
+export const MainLayout = ({ children }: { children: ReactElement }) => {
 	return (
 		<div>
 			<Navbar />

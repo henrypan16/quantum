@@ -1,4 +1,6 @@
-export const PieChart = () => {
+import { ReactElement } from 'react';
+
+export const PieChart = () : ReactElement => {
 	return (
 		<svg
 			aria-hidden="true"

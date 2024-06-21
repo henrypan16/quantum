@@ -5,8 +5,6 @@
 import { Button } from "./Button";
 import { Logo } from "../sidebar/Logo";
 
-import React from "react";
-
 export const Navbar = () => {
 	return (
 		<>
