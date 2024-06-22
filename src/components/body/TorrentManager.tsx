@@ -9,21 +9,17 @@ import { Toolbar, ToolbarProps } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
 import { useModal } from "../ui/useModal";
 import stateDictionary from "../../utils/StateDictionary";
-import React from "react";
 
-interface QueryProps {
-	data: TorrTorrentInfo[],
-	isLoading: boolean,
-	isFetching: boolean,
-	isError: boolean,
-}
+// interface QueryProps {
+// 	data: TorrTorrentInfo[],
+// 	isLoading: boolean,
+// 	isFetching: boolean,
+// 	isError: boolean,
+// }
 interface FilterInterface {
 	status: string;
 	categories: string;
 	tags: string;
-}
-interface TagInterface {
-	[key: string]: string;
 }
 
 export const TorrentManager = () => {
@@ -35,20 +31,20 @@ export const TorrentManager = () => {
 		tags: "Tags",
 	});
 
-	const { data, isLoading, isFetching }: QueryProps =
+	const { data, isLoading, isFetching }: UseQueryResult<TorrTorrentInfo[], Error> =
 		useQuery({
 			queryKey: ["torrents", "all"],
 			queryFn: torrentApi.getTorrents,
 			refetchInterval: 5000,
 		});
 
-	const categories: UseQueryResult<TagInterface, Error> =
+	const categories: UseQueryResult<string[], Error> =
 		useQuery({
 			queryKey: ["categories"],
 			queryFn: torrentApi.getCategories,
 		});
 
-	const tags: UseQueryResult<TagInterface, Error> = useQuery({
+	const tags: UseQueryResult<string[], Error> = useQuery({
 		queryKey: ["tags"],
 		queryFn: torrentApi.getTags,
 	});
@@ -61,7 +57,7 @@ export const TorrentManager = () => {
 				setTorrentData(data);
 			} else {
 				setTorrentData(
-					data.filter((torrent) =>
+					data?.filter((torrent) =>
 						torrent.name
 							.toLowerCase()
 							.includes(searchString.toLowerCase()),
@@ -74,7 +70,7 @@ export const TorrentManager = () => {
 	useEffect(() => {
 		if (!isLoading) {
 			setTorrentData(
-				data.filter((torrent) => {
+				data?.filter((torrent) => {
 					const statusCondition =
 						filter.status === "Status" ||
 						filter.status === "All" ||
@@ -109,7 +105,7 @@ export const TorrentManager = () => {
 		status: Object.values(stateDictionary).map(
 			(item) => item.short,
 		),
-		categories: !categories.isLoading && Object.keys(categories.data),
+		categories: !categories.isLoading && categories.data,
 		tags: !tags.isLoading && tags.data,
 		filter: filter,
 		setFilter: setFilter
@@ -140,11 +136,11 @@ export const TorrentManager = () => {
 				{isLoading ? (
 					<Loading />
 				) : (
-					<Info torrent={data[selectedItem]} />
+					data && <Info torrent={data[selectedItem]} />
 				)}
 			</div>
 			<AddTorrentModal
-				modal={modal}
+				modalId={modal.modalId} hide={modal.hide} show={modal.show}
 			/>
 		</main>
 	);

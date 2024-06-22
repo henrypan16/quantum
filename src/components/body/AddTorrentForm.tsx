@@ -1,31 +1,36 @@
-import { useState, useRef } from "react";
+import { useState, useRef, MutableRefObject } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi.ts";
 import { AiOutlineClose } from "react-icons/ai";
 import React from "react";
 
-export const AddTorrentForm = ({ submitRef }: { submitRef: RefObject }) => {
+export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTMLButtonElement | null> }) => {
 	const torrent = useMutation({
 		mutationKey: ["torrent"],
 		mutationFn: torrentApi.addTorrent,
 	});
-	const itemsRef = useRef();
-	const [torrents, setTorrents] = useState<FileList>();
+	const itemsRef = useRef<HTMLInputElement>(null);
+	const [torrents, setTorrents] = useState<FileList | null>(null);
 
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault();
-		torrent.mutate({ file: torrents });
+		torrent.mutate({ file: torrents } as { file: FileList });
 	};
 
 	const remove = (index: number) => {
 		const list = new DataTransfer();
-		Array.from(torrents).map((torrent) => {
-			if (torrent !== torrents[index]) {
-				list.items.add(new File(Array.from(torrent), torrent.name));
-			}
-		});
+		if(torrents !== null) {
+			Array.from(torrents).map((torrent: File) => {
+				if (torrent !== torrents[index]) {
+					list.items.add(torrent);
+				}
+			});
+		}
+		
 		setTorrents(list.files);
-		itemsRef.current.files = list.files;
+		if(itemsRef.current !== null) {
+			itemsRef.current.files = list.files;
+		}
 		// testRef.current.files = filtered;
 	};
 
@@ -62,10 +67,10 @@ export const AddTorrentForm = ({ submitRef }: { submitRef: RefObject }) => {
 						className="block w-full row-start-4 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
 						type="file"
 						accept=".torrent"
-						multiple="multiple"
+						multiple={true}
 						ref={itemsRef}
 						onChange={(e) => {
-							add(e.target.files);
+							e.target.files && add(e.target.files);
 						}}
 					/>
 				</div>

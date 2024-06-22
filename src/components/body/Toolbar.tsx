@@ -1,4 +1,3 @@
-import React from "react";
 import { SearchTorrent } from "./SearchTorrent";
 import { Select } from "../ui/Select";
 
@@ -9,16 +8,13 @@ import {
 	FiPlayCircle,
 	FiTrash2,
 } from "react-icons/fi";
-interface TagInterface {
-	[key: string]: string;
-}
 
 export interface ToolbarProps {
 	show: () => void;
 	setSearchString: (state: string) => void;
 	status: string[];
-	categories: {[key: string]: string} | false | undefined;
-	tags: TagInterface | false | undefined;
+	categories: string[] | false | undefined;
+	tags: string[] | false | undefined;
 	filter: { status: string; categories: string; tags: string };
 	setFilter: (obj: {
 		status: string;
@@ -68,19 +64,19 @@ export const Toolbar = ({
 			</button>
 			<SearchTorrent setSearchString={setSearchString} />
 			<Select
-				items={status && [...status, "All"]}
+				items={status ? [...status, "All"] : []}
 				title="Status"
 				selected={filter.status}
 				setSelected={(obj) => setFilter({ ...filter, status: obj })}
 			/>
 			<Select
-				items={categories && [...categories, "All", "Uncategorized"]}
+				items={categories ? [...categories, "All", "Uncategorized"] : []}
 				title="Categories"
 				selected={filter.categories}
 				setSelected={(obj) => setFilter({ ...filter, categories: obj })}
 			/>
 			<Select
-				items={tags && [...tags, "All", "Untagged"]}
+				items={tags ? [...tags, "All", "Untagged"] : []}
 				title="Tags"
 				selected={filter.tags}
 				setSelected={(obj) => setFilter({ ...filter, tags: obj })}

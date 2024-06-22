@@ -122,16 +122,16 @@ export const torrentApi = {
 	// 	});
 	// }, //NOT
 
-	getCategories: async (): Promise<TorrCategories> => {
+	getCategories: async (): Promise<string[]> => {
 		return (await fetch(baseURL + "torrents/categories", {
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
-				return response.json();
+				return response.json().then((data) => Object.keys(data));
 			} else {
 				throw new Error("Error");
 			}
-		})) as Promise<TorrCategories>;
+		}))
 	}, //TESTED
 
 	// addCategory: async (name: string, path: string) => {

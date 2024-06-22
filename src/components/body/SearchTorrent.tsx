@@ -1,9 +1,7 @@
-import React from "react";
-
 export const SearchTorrent = ({
 	setSearchString,
 }: {
-	setSearchString: (string) => void;
+	setSearchString: (string: string) => void;
 }) => {
 	return (
 		<form action="#" method="GET" className="md:pl-2">

@@ -2,11 +2,9 @@ import { ReactElement } from "react";
 
 export interface ModalProps {
 	children?: ReactElement;
-	modal : {
-		modalId: string;
-		hide: () => void;
-		show: () => void;
-	};
+	modalId: string;
+	hide: () => void;
+	show: () => void;
 }
 
 const Header = ({ children }: { children: ReactElement }) => (
@@ -25,19 +23,17 @@ const Footer = ({ children }: { children: ReactElement }) => (
 	</div>
 );
 
-export const Modal = ({ children, modal }: ModalProps) : ReactElement => {
+export const Modal = ({ children, modalId, hide }: ModalProps) : ReactElement => {
 	return (
 		<div
-			id={modal.modalId}
+			id={modalId}
 			tabIndex={-1}
 			className="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 			<div className="relative p-4 w-full max-w-2xl max-h-full">
 				<div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
 					<button
 						className="absolute right-2 top-2  text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-						onClick={() => {
-							modal.hide();
-						}}>
+						onClick={() => { hide()}}>
 						<svg
 							className="w-3 h-3"
 							aria-hidden="true"
