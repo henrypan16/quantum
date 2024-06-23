@@ -1,7 +1,8 @@
-import { TorrTorrentInfoStateUnion } from "./types";
-
 const stateDictionary: {
-	[i in TorrTorrentInfoStateUnion]: { long: string; short: string };
+	[key: string]: {
+		long: string;
+		short: string;
+	};
 } = {
 	error: {
 		long: "Some error occurred, applies to paused torrents",

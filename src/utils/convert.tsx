@@ -1,4 +1,4 @@
-import { TorrTorrentInfo } from "../utils/types";
+import { TorrentInfo } from "@utils/types";
 import stateDictionary from "./StateDictionary";
 
 const Progress = ({ percentage }: { percentage: number }) => {
@@ -13,7 +13,7 @@ const Progress = ({ percentage }: { percentage: number }) => {
 	);
 };
 
-export const convertTorrentInfo = (info: TorrTorrentInfo) => {
+export const convertTorrentInfo = (info: TorrentInfo) => {
 	return {
 		name: info.name,
 		size: intToSize(info.size),

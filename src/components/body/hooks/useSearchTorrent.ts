@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { UseQueryResult } from "@tanstack/react-query";
-import { TorrTorrentInfo } from "../../../utils/types";
+import { TorrentInfo } from "@utils/types";
 
 type SearchTorrentsProps = {
-	torrents: UseQueryResult<TorrTorrentInfo[], Error>,
-	setTorrentData: (data: TorrTorrentInfo[] | undefined) => void
-}
+	torrents: UseQueryResult<TorrentInfo[], Error>;
+	setTorrentData: (data: TorrentInfo[] | undefined) => void;
+};
 
-export const useSearchTorrent = ({torrents: {isLoading, isFetching, data}, setTorrentData}: SearchTorrentsProps) => {
-  const [searchString, setSearchString] = useState("");
+export const useSearchTorrent = ({
+	torrents: { isLoading, isFetching, data },
+	setTorrentData,
+}: SearchTorrentsProps) => {
+	const [searchString, setSearchString] = useState("");
 
-  useEffect(() => {
+	useEffect(() => {
 		if (!isLoading) {
 			if (searchString === "") {
 				setTorrentData(data);
@@ -26,8 +29,8 @@ export const useSearchTorrent = ({torrents: {isLoading, isFetching, data}, setTo
 		}
 	}, [searchString, isFetching]);
 
-  return {
-	searchString,
-	setSearchString
-  }
-}
+	return {
+		searchString,
+		setSearchString,
+	};
+};

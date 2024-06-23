@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { UseQueryResult } from "@tanstack/react-query";
-import { TorrTorrentInfo } from "../../../utils/types";
-import stateDictionary from "../../../utils/StateDictionary"
+import { TorrentInfo } from "@utils/types";
+import stateDictionary from "@utils/StateDictionary";
 
 type FilterTorrentProps = {
-	torrents: UseQueryResult<TorrTorrentInfo[], Error>,
-	setTorrentData: (data: TorrTorrentInfo[] | undefined) => void
-}
+	torrents: UseQueryResult<TorrentInfo[], Error>;
+	setTorrentData: (data: TorrentInfo[] | undefined) => void;
+};
 
 interface FilterInterface {
 	status: string;
@@ -14,14 +14,17 @@ interface FilterInterface {
 	tags: string;
 }
 
-export const useFilterTorrent = ({torrents: {data, isLoading, isFetching}, setTorrentData}: FilterTorrentProps) => {
+export const useFilterTorrent = ({
+	torrents: { data, isLoading, isFetching },
+	setTorrentData,
+}: FilterTorrentProps) => {
 	const [filter, setFilter] = useState<FilterInterface>({
 		status: "Status",
 		categories: "Categories",
 		tags: "Tags",
 	});
 
-    useEffect(() => {
+	useEffect(() => {
 		if (!isLoading) {
 			setTorrentData(
 				data?.filter((torrent) => {
@@ -45,9 +48,9 @@ export const useFilterTorrent = ({torrents: {data, isLoading, isFetching}, setTo
 			);
 		}
 	}, [filter, isFetching, data]);
-    
-  return {
-    filter,
-	setFilter
-  }
-}
+
+	return {
+		filter,
+		setFilter,
+	};
+};

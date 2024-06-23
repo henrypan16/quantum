@@ -1,11 +1,15 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { torrentApi } from "../../utils/torrentApi";
+import { torrentApi } from "@utils/torrentApi";
 import { TransferInfo } from "./TransferInfo";
-import { TorrTorrentInfo } from "../../utils/types";
+import { TorrentInfo, TorrentProperties } from "@utils/types";
 import { intToSize, intToSpeed, secToTime } from "../../utils/convert";
 
-export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
-	const { data, isPending, isError }: UseQueryResult<TorrTorrentInfo | null, Error> = useQuery({
+export const General = ({ torrent }: { torrent: TorrentInfo }) => {
+	const {
+		data,
+		isPending,
+		isError,
+	}: UseQueryResult<TorrentProperties | null, Error> = useQuery({
 		queryKey: ["torrent", torrent.hash],
 		queryFn: () => torrentApi.getProperties(torrent.hash),
 	});
@@ -105,7 +109,7 @@ export const General = ({ torrent }: { torrent: TorrTorrentInfo }) => {
 								/>
 								<TransferInfo
 									label="Wasted"
-									value={intToSize(parseInt(data?.total_wasted || "0"))}
+									value={intToSize(data?.total_wasted || 0)}
 								/>
 								<TransferInfo
 									label="Last Seen Complete"

@@ -1,5 +1,3 @@
-import { TorrCategories } from "../utils/types";
-
 let serverAddress = "/";
 
 if (serverAddress.substring(serverAddress.length - 1) !== "/") {
@@ -123,7 +121,7 @@ export const torrentApi = {
 	// }, //NOT
 
 	getCategories: async (): Promise<string[]> => {
-		return (await fetch(baseURL + "torrents/categories", {
+		return await fetch(baseURL + "torrents/categories", {
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
@@ -131,7 +129,7 @@ export const torrentApi = {
 			} else {
 				throw new Error("Error");
 			}
-		}))
+		});
 	}, //TESTED
 
 	// addCategory: async (name: string, path: string) => {
@@ -162,8 +160,8 @@ export const torrentApi = {
 	// 	})) as Promise<string>;
 	// }, //NOT
 
-	getTags: async (): Promise<TorrCategories> => {
-		return (await fetch(baseURL + "torrents/tags", {
+	getTags: async (): Promise<string[]> => {
+		return await fetch(baseURL + "torrents/tags", {
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
@@ -171,12 +169,12 @@ export const torrentApi = {
 			} else {
 				throw new Error("Error");
 			}
-		})) as Promise<TorrCategories>;
+		});
 	}, //TESTED
 
-	addTorrent: async (fileList : {file: FileList}) => {
+	addTorrent: async (fileList: { file: FileList }) => {
 		const formData = new FormData();
-		console.log(fileList)
+		console.log(fileList);
 		Array.from(fileList.file).map((torrent: Blob) => {
 			formData.append("torrents", torrent);
 		});

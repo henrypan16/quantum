@@ -1,8 +1,8 @@
 import { convertTorrentInfo } from "../../utils/convert";
-import { TorrTorrentInfo } from "../../utils/types";
+import { TorrentInfo } from "@utils/types";
 
 interface TorrentTableProps {
-	data: TorrTorrentInfo[];
+	data: TorrentInfo[];
 	selectedItem: number;
 	itemClick: (index: number) => void;
 }
@@ -12,22 +12,7 @@ export const TorrentTable = ({
 	selectedItem,
 	itemClick,
 }: TorrentTableProps) => {
-	const Columns = [
-		"Name",
-		"Size",
-		"Progress",
-		"Status",
-		"Seeds",
-		"Peers",
-		"Down Speed",
-		"Up Speed",
-		"Ratio",
-		"Downloaded",
-		"Uploaded",
-		"Time",
-	];
-
-	const addTextColor = (status : string) : string => {
+	const addTextColor = (status: string): string => {
 		switch (status) {
 			case "stalledDL":
 			case "downloading":
@@ -45,14 +30,45 @@ export const TorrentTable = ({
 		}
 	};
 	return (
-		<table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 w-full">
+		<table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 w-full table-fixed">
 			<thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 				<tr className="h-full">
-					{Columns.map((item, index) => (
-						<th key={index} scope="col" className="px-6 py-3">
-							{item}
-						</th>
-					))}
+					<th scope="col" className="px-6 py-3 w-72">
+						Name
+					</th>
+					<th scope="col" className="px-6 py-3 w-20">
+						Size
+					</th>
+					<th scope="col" className="px-6 py-3 w-32">
+						Progress
+					</th>
+					<th scope="col" className="px-6 py-3 w-20">
+						Status
+					</th>
+					<th scope="col" className="px-6 py-3 w-16">
+						Seed
+					</th>
+					<th scope="col" className="px-6 py-3 w-16">
+						Peers
+					</th>
+					<th scope="col" className="px-6 py-3 w-32">
+						Down Speed
+					</th>
+					<th scope="col" className="px-6 py-3 w-32">
+						Up Speed
+					</th>
+					<th scope="col" className="px-6 py-3 w-20">
+						Ratio
+					</th>
+					<th scope="col" className="px-6 py-3 w-28">
+						Downloaded
+					</th>
+					<th scope="col" className="px-6 py-3 w-28">
+						Uploaded
+					</th>
+					<th scope="col" className="px-6 py-3 w-28">
+						Time
+					</th>
 				</tr>
 			</thead>
 
@@ -71,7 +87,7 @@ export const TorrentTable = ({
 							(value, index) => (
 								<td
 									key={index}
-									className="px-6 py-4 whitespace-nowrap">
+									className="px-6 py-4 whitespace-nowrap overflow-hidden">
 									{value}
 								</td>
 							),

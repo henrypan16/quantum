@@ -8,7 +8,7 @@ interface ModalProps {
 	show: () => void;
 }
 
-export const AddTorrentModal = ({modalId, hide, show}: ModalProps) => {
+export const AddTorrentModal = ({ modalId, hide, show }: ModalProps) => {
 	const submitRef = useRef<HTMLButtonElement>(null);
 
 	return (
@@ -22,17 +22,21 @@ export const AddTorrentModal = ({modalId, hide, show}: ModalProps) => {
 				<AddTorrentForm submitRef={submitRef} />
 			</Modal.Body>
 			<Modal.Footer>
-				<button
-					onClick={(e) => e.target.dispatchEvent(new Event("submit"))}
-					className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-					Add
-				</button>
-				<button
-					onClick={() => hide()}
-					type="button"
-					className="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-800 dark:hover:bg-red-700 dark:focus:ring-red-800">
-					Cancel
-				</button>
+				<div className="flex justify-between px-40">
+					<button
+						onClick={(e) =>
+							e.target.dispatchEvent(new Event("submit"))
+						}
+						className="w-24 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:border-gray-500 dark:border dark:hover:bg-gray-800 dark:focus:ring-gray-600">
+						<span className="m-auto">Add</span>
+					</button>
+					<button
+						onClick={() => hide()}
+						type="button"
+						className="w-24 text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-2 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:border-gray-500 dark:border dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+						<span className="m-auto">Cancel</span>
+					</button>
+				</div>
 			</Modal.Footer>
 		</Modal>
 	);

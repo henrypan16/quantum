@@ -33,7 +33,7 @@ export const Toolbar = ({
 	setFilter,
 }: ToolbarProps) => {
 	return (
-		<div className="flex flex-row mt-8 md:my-4 ml-1 flex-shrink-0 w-full space-y-0 items-center space-x-3">
+		<div className="flex flex-row mt-8 md:my-4 ml-1 flex-shrink-0 w-full space-y-0 items-center space-x-3 overflow-hidden">
 			<button
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
 				onClick={() => {
@@ -43,8 +43,7 @@ export const Toolbar = ({
 			</button>
 			<button
 				type="button"
-				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
-				>
+				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center">
 				<FiPauseCircle />
 			</button>
 			<button
@@ -70,7 +69,9 @@ export const Toolbar = ({
 				setSelected={(obj) => setFilter({ ...filter, status: obj })}
 			/>
 			<Select
-				items={categories ? [...categories, "All", "Uncategorized"] : []}
+				items={
+					categories ? [...categories, "All", "Uncategorized"] : []
+				}
 				title="Categories"
 				selected={filter.categories}
 				setSelected={(obj) => setFilter({ ...filter, categories: obj })}
