@@ -1,10 +1,11 @@
-import { useState, useRef, MutableRefObject } from "react";
+import { useState, useRef, RefObject } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/torrentApi.ts";
 import { AiOutlineClose } from "react-icons/ai";
+import { Form } from "../ui/Form"
 import React from "react";
 
-export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTMLButtonElement | null> }) => {
+export const AddTorrentForm = ({ submitRef }: { submitRef?: RefObject<HTMLButtonElement> }) => {
 	const torrent = useMutation({
 		mutationKey: ["torrent"],
 		mutationFn: torrentApi.addTorrent,
@@ -15,7 +16,23 @@ export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTML
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault();
 		torrent.mutate({ file: torrents } as { file: FileList });
+		setTorrents(null);
 	};
+	// const parseTorrentFiles = (input: string) => {
+	// 	// Regular expression to match each file entry
+	// 	const regex = /pathl\d+:(.*?)\.[a-zA-Z0-9]{3,4}/g;
+	// 	let fileNames = [];
+	// 	let match;
+		
+	// 	while ((match = regex.exec(input)) !== null) {
+	// 		// Extracting the file name from the regex match
+	// 		let fileName = match[1].trim(); // Group 1 contains the file name
+
+	// 		fileNames.push(fileName);
+	// 	}
+		
+	// 	return fileNames;
+	// }
 
 	const remove = (index: number) => {
 		const list = new DataTransfer();
@@ -31,16 +48,10 @@ export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTML
 		if(itemsRef.current !== null) {
 			itemsRef.current.files = list.files;
 		}
-		// testRef.current.files = filtered;
-	};
-
-	const add = (files: FileList) => {
-		setTorrents(files);
 	};
 
 	return (
-		<form className="p-4 md:p-5 w-full" onSubmit={submit} method="post">
-			<div className="flex flex-col gap-4 w-full">
+		<Form submit={submit} submitRef={submitRef}>
 				<div className="grid grid-rows-4 gap-2 border w-full p-2 bg-white h-48 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 					<ul className="overflow-y-scroll row-span-3 scrollbar">
 						{torrents &&
@@ -54,6 +65,7 @@ export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTML
 										{torrent.name}
 									</button>
 									<button
+										type="button"
 										className="text-white mr-4"
 										onClick={() => {
 											remove(index);
@@ -70,38 +82,23 @@ export const AddTorrentForm = ({ submitRef }: { submitRef: MutableRefObject<HTML
 						multiple={true}
 						ref={itemsRef}
 						onChange={(e) => {
-							e.target.files && add(e.target.files);
+							e.target.files && setTorrents(e.target.files);
 						}}
 					/>
 				</div>
-
-				<div>
-					<label
-						htmlFor="name"
-						className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-						Path
-					</label>
-					<input
-						type="text"
-						name="name"
-						id="name"
-						className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-						placeholder="Enter download path"
-					/>
+				<div className="flex flex-row justify-between">
+					<Form.Toggle/>
+					<Form.TextBox/>
 				</div>
 
-				<div>
-					<label
-						className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-						htmlFor="">
-						Category
-					</label>
-					<select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-						<option>test</option>
-					</select>
+				<Form.Select/>
+				<div className="grid grid-cols-2 gap-3">
+					<Form.Checkbox label="Start torrent"/>
+					<Form.Checkbox label="Add to top of queue"/>
+					<Form.Checkbox label="Download first & last piece first"/>
+					<Form.Checkbox label="Download in sequential order"/>
 				</div>
-			</div>
-			<button type="submit" className="hidden" ref={submitRef}></button>
-		</form>
+
+		</Form>
 	);
 };

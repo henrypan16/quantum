@@ -1,103 +1,32 @@
-import { torrentApi } from "../../utils/torrentApi";
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Info } from "../Info";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Loading } from "../ui/Loading";
 import { TorrTorrentInfo } from "../../utils/types";
 import { TorrentTable } from "./TorrentTable";
 import { Toolbar, ToolbarProps } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
-import { useModal } from "../ui/useModal";
-import stateDictionary from "../../utils/StateDictionary";
+import { useModal } from "../ui/hooks";
 
-// interface QueryProps {
-// 	data: TorrTorrentInfo[],
-// 	isLoading: boolean,
-// 	isFetching: boolean,
-// 	isError: boolean,
-// }
-interface FilterInterface {
-	status: string;
-	categories: string;
-	tags: string;
-}
+import {
+	useTorrentData,
+	useFilterTorrent,
+	useSearchTorrent,
+} from "./hooks"
+
+import stateDictionary from "../../utils/StateDictionary"
+
 
 export const TorrentManager = () => {
-	const [selectedItem, setSelectedItem] = useState(0);
-	const [searchString, setSearchString] = useState("");
-	const [filter, setFilter] = useState<FilterInterface>({
-		status: "Status",
-		categories: "Categories",
-		tags: "Tags",
-	});
-
-	const { data, isLoading, isFetching }: UseQueryResult<TorrTorrentInfo[], Error> =
-		useQuery({
-			queryKey: ["torrents", "all"],
-			queryFn: torrentApi.getTorrents,
-			refetchInterval: 5000,
-		});
-
-	const categories: UseQueryResult<string[], Error> =
-		useQuery({
-			queryKey: ["categories"],
-			queryFn: torrentApi.getCategories,
-		});
-
-	const tags: UseQueryResult<string[], Error> = useQuery({
-		queryKey: ["tags"],
-		queryFn: torrentApi.getTags,
-	});
-
 	const [torrentData, setTorrentData] = useState<TorrTorrentInfo[]>();
+	const [selectedItem, setSelectedItem] = useState(0);
+	const {torrents, categories, tags} = useTorrentData();
 
-	useEffect(() => {
-		if (!isLoading) {
-			if (searchString === "") {
-				setTorrentData(data);
-			} else {
-				setTorrentData(
-					data?.filter((torrent) =>
-						torrent.name
-							.toLowerCase()
-							.includes(searchString.toLowerCase()),
-					),
-				);
-			}
-		}
-	}, [searchString, isFetching]);
-
-	useEffect(() => {
-		if (!isLoading) {
-			setTorrentData(
-				data?.filter((torrent) => {
-					const statusCondition =
-						filter.status === "Status" ||
-						filter.status === "All" ||
-						stateDictionary[torrent.state].short === filter.status;
-					const categoriesCondition =
-						filter.categories === "Categories" ||
-						filter.categories === "All" ||
-						torrent.category === filter.categories;
-					const tagsCondition =
-						filter.tags === "Tags" ||
-						filter.tags === "All" ||
-						torrent.tags.includes(filter.tags);
-
-					return (
-						statusCondition && categoriesCondition && tagsCondition
-					);
-				}),
-			);
-		}
-	}, [filter, isFetching, data]);
+	const {filter, setFilter} = useFilterTorrent({torrents, setTorrentData})
+	const {setSearchString } = useSearchTorrent({torrents, setTorrentData})
 
 	//{modalId, modalRef, hide, show}
 	const modal = useModal();
-
-	const itemClick = (index: number) => {
-		setSelectedItem(index);
-	};
 
 	const toolBarProps: ToolbarProps = {
 		show: modal.show,
@@ -118,7 +47,7 @@ export const TorrentManager = () => {
 			/>
 
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar">
-				{isLoading ? (
+				{torrents.isLoading ? (
 					<Loading />
 				) : (
 					<>
@@ -126,17 +55,17 @@ export const TorrentManager = () => {
 							<TorrentTable
 								data={torrentData}
 								selectedItem={selectedItem}
-								itemClick={itemClick}
+								itemClick={(index) => setSelectedItem(index)}
 							/>
 						)}
 					</>
 				)}
 			</div>
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar flex flex-col-reverse border rounded-t-sm border-gray-700 bg-gray-800">
-				{isLoading ? (
+				{torrents.isLoading ? (
 					<Loading />
 				) : (
-					data && <Info torrent={data[selectedItem]} />
+					torrents.data && <Info torrent={torrents.data[selectedItem]} />
 				)}
 			</div>
 			<AddTorrentModal

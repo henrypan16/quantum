@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 
 export interface ModalProps {
-	children?: ReactElement;
+	children:  ReactElement | ReactElement[];
 	modalId: string;
 	hide: () => void;
 	show: () => void;
@@ -17,7 +17,7 @@ const Body = ({ children }: { children: ReactElement }) => (
 	<div className="p-4 md:p-5 space-y-4">{children}</div>
 );
 
-const Footer = ({ children }: { children: ReactElement }) => (
+const Footer = ({ children }: { children: ReactElement | ReactElement[] }) => (
 	<div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
 		{children}
 	</div>
