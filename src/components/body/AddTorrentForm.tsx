@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { torrentApi } from "../../utils/api/torrents";
 import { FiX } from "react-icons/fi";
 import { Form } from "../ui/Form";
-import React from "react";
+import { FormEvent } from "react";
 
 export const AddTorrentForm = ({
 	submitRef,
@@ -17,7 +17,7 @@ export const AddTorrentForm = ({
 	const itemsRef = useRef<HTMLInputElement>(null);
 	const [torrents, setTorrents] = useState<FileList | null>(null);
 
-	const submit = (e: React.FormEvent) => {
+	const submit = (e: FormEvent) => {
 		e.preventDefault();
 		console.log(torrents);
 		if (torrents !== null) {
@@ -101,13 +101,13 @@ export const AddTorrentForm = ({
 					required
 				/>
 			</div>
-			<div className="flex flex-row justify-between">
+			<div className="flex md:flex-row flex-col items-center md:justify-between gap-4">
 				<Form.Toggle />
 				<Form.TextBox />
 			</div>
 
 			<Form.Select />
-			<div className="grid grid-cols-2 gap-3">
+			<div className="grid md:grid-cols-2 gap-3">
 				<Form.Checkbox label="Start torrent" />
 				<Form.Checkbox label="Add to top of queue" />
 				<Form.Checkbox label="Download first & last piece first" />

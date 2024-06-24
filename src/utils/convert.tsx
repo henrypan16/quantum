@@ -32,14 +32,17 @@ export const convertTorrentInfo = (info: TorrentInfo) => {
 	};
 };
 
-export const intToSize = (size: number) => {
+export const intToSize = (size: number | undefined) => {
+	if(typeof size === 'undefined') {
+		return 0;
+	}
 	const units = ["B", "KB", "MB", "GB", "TB"];
 	let i = 0;
-	while (size > 1024 && i < units.length) {
+	while (size >= 1024 && i < units.length) {
 		size /= 1024;
 		i++;
 	}
-	return size.toFixed(2) + " " + units[i];
+	return size.toPrecision(3) + " " + units[i];
 };
 
 export const intToSpeed = (time: number) => {

@@ -6,10 +6,10 @@ export const TransferInfo = ({
 	value: string | number | null | undefined;
 }) => {
 	return (
-		<>
-			<p className="col-span-6 place-self-end mr-1">{label}</p>
-			<p className="place-self-start">:</p>
-			<p className="col-span-5 place-self-start">{value}</p>
-		</>
+		<div className="flex flex-row gap-1">
+			<p className="font-semibold">{label}</p>
+			<p>:</p>
+			<p className="">{value}</p>
+		</div>
 	);
 };

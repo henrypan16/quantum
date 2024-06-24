@@ -22,7 +22,7 @@ export const AddTorrentModal = ({ modalId, hide, show }: ModalProps) => {
 				<AddTorrentForm submitRef={submitRef} />
 			</Modal.Body>
 			<Modal.Footer>
-				<div className="flex justify-between px-40">
+				<div className="flex justify-between md:px-40 px-5">
 					<input
 						type="submit"
 						form="addTorrentForm"

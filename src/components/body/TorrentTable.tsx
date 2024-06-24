@@ -21,6 +21,8 @@ export const TorrentTable = ({ data, hash, itemClick }: TorrentTableProps) => {
 			case "stalledUP":
 			case "uploading":
 				return "text-sky-400";
+			case "pausedUP":
+				return "text-purple-400";
 			default:
 				return "text-white";
 		}

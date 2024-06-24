@@ -18,7 +18,7 @@ const stateDictionary: {
 	},
 	pausedUP: {
 		long: "Torrent is paused and has finished downloading",
-		short: "Paused / Done",
+		short: "Completed",
 	},
 	queuedUP: {
 		long: "Queuing is enabled and torrent is queued for upload",

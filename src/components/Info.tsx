@@ -25,10 +25,6 @@ export const Info = ({ torrent }: { torrent: TorrentInfo | undefined }) => {
 		},
 		{
 			id: 4,
-			title: "HTTP Sources",
-		},
-		{
-			id: 5,
 			title: "Content",
 		},
 	];

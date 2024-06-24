@@ -37,7 +37,7 @@ export const Toolbar = ({
 	setFilter,
 }: ToolbarProps) => {
 	return (
-		<div className="flex flex-row mt-8 md:my-4 ml-1 flex-shrink-0 w-full space-y-0 items-center space-x-3 overflow-hidden">
+		<div className="flex flex-row mt-8 md:my-4 ml-1 flex-shrink-0 w-full space-y-0 items-center space-x-3 overflow-hidden justify-evenly md:justify-between">
 			<button
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
 				onClick={show}>
@@ -65,27 +65,45 @@ export const Toolbar = ({
 				className="text-white  focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center">
 				<FiMoreHorizontal />
 			</button>
-			<SearchTorrent setSearchString={setSearchString} />
-			<Select
-				items={status ? [...status, "All"] : []}
-				title="Status"
-				selected={filter.status}
-				setSelected={(obj) => setFilter({ ...filter, status: obj })}
-			/>
-			<Select
-				items={
-					categories ? [...categories, "All", "Uncategorized"] : []
-				}
-				title="Categories"
-				selected={filter.categories}
-				setSelected={(obj) => setFilter({ ...filter, categories: obj })}
-			/>
-			<Select
-				items={tags ? [...tags, "All", "Untagged"] : []}
-				title="Tags"
-				selected={filter.tags}
-				setSelected={(obj) => setFilter({ ...filter, tags: obj })}
-			/>
+			<div className="hidden md:block w-full">
+				<SearchTorrent setSearchString={setSearchString} />
+			</div>
+			<div className="flex flex-row gap-4">
+				<div className="hidden md:block">
+					<Select
+						items={status ? [...status, "All"] : []}
+						title="Status"
+						selected={filter.status}
+						setSelected={(obj) =>
+							setFilter({ ...filter, status: obj })
+						}
+					/>
+				</div>
+				<div className="hidden md:block">
+					<Select
+						items={
+							categories
+								? [...categories, "All", "Uncategorized"]
+								: []
+						}
+						title="Categories"
+						selected={filter.categories}
+						setSelected={(obj) =>
+							setFilter({ ...filter, categories: obj })
+						}
+					/>
+				</div>
+				<div className="hidden md:block">
+					<Select
+						items={tags ? [...tags, "All", "Untagged"] : []}
+						title="Tags"
+						selected={filter.tags}
+						setSelected={(obj) =>
+							setFilter({ ...filter, tags: obj })
+						}
+					/>
+				</div>
+			</div>
 		</div>
 	);
 };

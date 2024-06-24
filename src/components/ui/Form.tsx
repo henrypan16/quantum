@@ -8,7 +8,7 @@ type FormProps = {
 };
 
 const TextBox = () => (
-	<div className="flex items-center ml-6 gap-3 w-full">
+	<div className="flex items-center md:ml-6 gap-3 w-full">
 		<label
 			htmlFor="name"
 			className="block text-sm font-medium text-gray-900 dark:text-white">
