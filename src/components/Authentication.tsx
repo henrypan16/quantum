@@ -17,7 +17,7 @@ export const Authentication = ({
 			<div className="flex flex-col items-center justify-center px-6 py-8 mx-auto my-auto md:h-screen lg:py-0 fixed inset-0">
 				<a
 					href="/"
-					className="flex items-center bg-gradient-to-r from-sky-100 to-sky-300 bg-clip-text md:mb-6">
+					className="flex justify-between items-center bg-gradient-to-r from-sky-100 to-sky-300 bg-clip-text md:mb-6">
 					<svg
 						className="w-[60px] h-[60px] text-sky-200"
 						aria-hidden="true"

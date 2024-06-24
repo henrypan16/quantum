@@ -15,7 +15,7 @@ if (serverAddress.substring(serverAddress.length - 1) !== "/") {
 	serverAddress = `${serverAddress}/`;
 }
 
-const baseURL: string = `${serverAddress}api/v2/torrents`;
+const baseURL: string = `${serverAddress}api/v2/torrents/`;
 
 export const torrentApi = {
 	getTorrents: async (
@@ -113,8 +113,12 @@ export const torrentApi = {
 	}, //NOT
 
 	pause: async (hash: string): Promise<string> => {
-		return await fetch(`${baseURL}pause?hashes=${hash}`, {
+		const formData = new FormData();
+		formData.append("hashes", hash);
+
+		return await fetch(`${baseURL}pause`, {
 			method: "POST",
+			body: formData,
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
@@ -123,11 +127,15 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		});
-	}, //NOT
+	}, //TESTED
 
 	resume: async (hash: string): Promise<string> => {
-		return await fetch(`${baseURL}resume?hashes=${hash}`, {
+		const formData = new FormData();
+		formData.append("hashes", hash);
+
+		return await fetch(`${baseURL}resume`, {
 			method: "POST",
+			body: formData,
 			credentials: "include",
 		}).then((response) => {
 			if (response.status == 200) {
@@ -136,7 +144,7 @@ export const torrentApi = {
 				throw new Error("Error");
 			}
 		});
-	}, //NOT
+	}, //TESTED
 
 	delete: async (hash: string, deleteFiles: boolean): Promise<string> => {
 		return await fetch(
@@ -181,9 +189,11 @@ export const torrentApi = {
 	}, //NOT
 
 	addTorrent: async (parameters: AddTorrentParameters): Promise<void> => {
-		const fileList = parameters.torrents;
+		console.log(parameters);
+
 		const formData = new FormData();
-		Array.from(fileList.file).map((torrent: Blob) => {
+
+		Array.from(parameters.torrents).map((torrent: Blob) => {
 			formData.append("torrents", torrent);
 		});
 

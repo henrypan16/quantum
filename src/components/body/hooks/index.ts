@@ -1,5 +1,5 @@
-import { useTorrentData } from "./useTorrentData";
+import { useFetchData } from "./useFetchData";
 import { useSearchTorrent } from "./useSearchTorrent";
 import { useFilterTorrent } from "./useFilterTorrent";
 
-export { useTorrentData, useSearchTorrent, useFilterTorrent };
+export { useFetchData, useSearchTorrent, useFilterTorrent };

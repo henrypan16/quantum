@@ -1,5 +1,5 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { torrentApi } from "@utils/torrentApi";
+import { torrentApi } from "@utils/api/torrents";
 import { TransferInfo } from "./TransferInfo";
 import { TorrentInfo, TorrentProperties } from "@utils/types";
 import { intToSize, intToSpeed, secToTime } from "../../utils/convert";

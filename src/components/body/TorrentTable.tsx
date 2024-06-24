@@ -3,15 +3,11 @@ import { TorrentInfo } from "@utils/types";
 
 interface TorrentTableProps {
 	data: TorrentInfo[];
-	selectedItem: number;
-	itemClick: (index: number) => void;
+	hash: string;
+	itemClick: (hash: string) => void;
 }
 
-export const TorrentTable = ({
-	data,
-	selectedItem,
-	itemClick,
-}: TorrentTableProps) => {
+export const TorrentTable = ({ data, hash, itemClick }: TorrentTableProps) => {
 	const addTextColor = (status: string): string => {
 		switch (status) {
 			case "stalledDL":
@@ -77,11 +73,11 @@ export const TorrentTable = ({
 					<tr
 						key={index}
 						className={`bg-white border-b dark:border-gray-700
-                        ${selectedItem == index ? " dark:bg-gray-500" : "dark:bg-gray-800 hover:bg-gray-600"} 
+                        ${hash == item.hash ? " dark:bg-gray-500" : "dark:bg-gray-800 hover:bg-gray-600"} 
                         ${addTextColor(item.state)}
                         `}
 						onClick={() => {
-							itemClick(index);
+							itemClick(item.hash);
 						}}>
 						{Object.values(convertTorrentInfo(item)).map(
 							(value, index) => (

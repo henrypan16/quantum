@@ -388,8 +388,8 @@ export interface TorrentFile {
 }
 
 export interface AddTorrentParameters {
-	urls: string; //	URLs separated with newlines
-	torrents: { file: FileList }; //Raw data of torrent file. torrents can be presented multiple times.
+	urls?: string; //	URLs separated with newlines
+	torrents: FileList; //Raw data of torrent file. torrents can be presented multiple times.
 	savepath?: string; //	Download folder
 	cookie?: string; //Cookie sent to download the .torrent file
 	category?: string; //	Category for the torrent

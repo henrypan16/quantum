@@ -1,6 +1,6 @@
 import { useState, useRef, RefObject } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { torrentApi } from "../../utils/torrentApi.ts";
+import { torrentApi } from "../../utils/api/torrents";
 import { FiX } from "react-icons/fi";
 import { Form } from "../ui/Form";
 import React from "react";
@@ -19,9 +19,14 @@ export const AddTorrentForm = ({
 
 	const submit = (e: React.FormEvent) => {
 		e.preventDefault();
+		console.log(torrents);
 		if (torrents !== null) {
-			torrent.mutate({ file: torrents } as { file: FileList });
+			const parameters = { torrents: torrents };
+			torrent.mutate(parameters);
 			setTorrents(null);
+			if (itemsRef.current !== null) {
+				itemsRef.current.files = new DataTransfer().files;
+			}
 		}
 	};
 	// const parseTorrentFiles = (input: string) => {
@@ -62,7 +67,7 @@ export const AddTorrentForm = ({
 	};
 
 	return (
-		<Form submit={submit} submitRef={submitRef}>
+		<Form submit={submit} id="addTorrentForm" submitRef={submitRef}>
 			<div className="grid grid-rows-4 gap-2 border w-full p-2 bg-white h-48 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 				<ul className="overflow-y-scroll row-span-3 scrollbar">
 					{torrents &&

@@ -11,6 +11,8 @@ import {
 
 export interface ToolbarProps {
 	show: () => void;
+	pause: () => void;
+	resume: () => void;
 	setSearchString: (state: string) => void;
 	status: string[];
 	categories: string[] | false | undefined;
@@ -25,6 +27,8 @@ export interface ToolbarProps {
 
 export const Toolbar = ({
 	show,
+	pause,
+	resume,
 	setSearchString,
 	status,
 	categories,
@@ -36,18 +40,18 @@ export const Toolbar = ({
 		<div className="flex flex-row mt-8 md:my-4 ml-1 flex-shrink-0 w-full space-y-0 items-center space-x-3 overflow-hidden">
 			<button
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center"
-				onClick={() => {
-					show();
-				}}>
+				onClick={show}>
 				<FiFilePlus />
 			</button>
 			<button
 				type="button"
+				onClick={() => pause()}
 				className="text-white focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center">
 				<FiPauseCircle />
 			</button>
 			<button
 				type="button"
+				onClick={() => resume()}
 				className="text-white  focus:ring-2 focus:outline-none bg-gray-600 font-medium rounded-lg text-2xl p-2 text-center">
 				<FiPlayCircle />
 			</button>

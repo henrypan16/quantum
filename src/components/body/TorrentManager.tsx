@@ -7,14 +7,26 @@ import { Toolbar, ToolbarProps } from "./Toolbar";
 import { AddTorrentModal } from "./AddTorrentModal";
 import { useModal } from "../ui/hooks";
 
-import { useTorrentData, useFilterTorrent, useSearchTorrent } from "./hooks";
+import { useMutation } from "@tanstack/react-query";
+import { torrentApi } from "@utils/api/torrents";
+import { useFetchData, useFilterTorrent, useSearchTorrent } from "./hooks";
 
 import stateDictionary from "../../utils/StateDictionary";
 
 export const TorrentManager = () => {
 	const [torrentData, setTorrentData] = useState<TorrentInfo[]>();
-	const [selectedItem, setSelectedItem] = useState(0);
-	const { torrents, categories, tags } = useTorrentData();
+
+	const [hash, setHash] = useState("");
+
+	const { torrents, categories, tags } = useFetchData();
+
+	const { mutate: pauseTorrent } = useMutation({
+		mutationFn: torrentApi.pause,
+	});
+
+	const { mutate: resumeTorrent } = useMutation({
+		mutationFn: torrentApi.resume,
+	});
 
 	const { filter, setFilter } = useFilterTorrent({
 		torrents,
@@ -27,6 +39,8 @@ export const TorrentManager = () => {
 
 	const toolBarProps: ToolbarProps = {
 		show: modal.show,
+		pause: () => pauseTorrent(hash),
+		resume: () => resumeTorrent(hash),
 		setSearchString: setSearchString,
 		status: Object.values(stateDictionary).map((item) => item.short),
 		categories: !categories.isLoading && categories.data,
@@ -47,8 +61,8 @@ export const TorrentManager = () => {
 						{torrentData && (
 							<TorrentTable
 								data={torrentData}
-								selectedItem={selectedItem}
-								itemClick={(index) => setSelectedItem(index)}
+								hash={hash}
+								itemClick={setHash}
 							/>
 						)}
 					</>
@@ -59,7 +73,11 @@ export const TorrentManager = () => {
 					<Loading />
 				) : (
 					torrents.data && (
-						<Info torrent={torrents.data[selectedItem]} />
+						<Info
+							torrent={torrents.data.find(
+								(torrent) => torrent.hash === hash,
+							)}
+						/>
 					)
 				)}
 			</div>

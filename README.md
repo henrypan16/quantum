@@ -1,9 +1,10 @@
 # Quantum - A modern qbitTorrent UI
 
-*Work in progress
-Inspired by https://github.com/ntoporcov/iQbit*
+_Work in progress
+Inspired by https://github.com/ntoporcov/iQbit_
 
 ## First release v1.0.0beta available
+
 Quantum is designed to provide a sophisticated and modern torrent interface designed for managing thousands of torrents simultaneously. The interface will be highly responsive, ensuring smooth and efficient user interactions, even under heavy load. Key features will include:
 
 1. Scalable Torrent Management: Efficient handling of large numbers of torrents, with capabilities for batch operations and automated management

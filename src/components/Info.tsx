@@ -8,7 +8,7 @@ interface TabInterface {
 	title: string;
 }
 
-export const Info = ({ torrent }: { torrent: TorrentInfo }) => {
+export const Info = ({ torrent }: { torrent: TorrentInfo | undefined }) => {
 	const [selectedTab, setSelectedTab] = useState(1);
 	const tabs = [
 		{
@@ -34,6 +34,7 @@ export const Info = ({ torrent }: { torrent: TorrentInfo }) => {
 	];
 
 	const changeTab = (tab: number) => {
+		if (typeof torrent === "undefined") return;
 		switch (tab) {
 			case 1:
 				return <General torrent={torrent} />;

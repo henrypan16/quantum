@@ -1,4 +1,4 @@
-import { torrentApi } from "./torrentApi";
+import { authApi } from "@utils/api/auth";
 import { useMutation } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 
@@ -14,7 +14,7 @@ export const useAuth = () => {
 	}, []);
 
 	const mutation = useMutation({
-		mutationFn: torrentApi.login,
+		mutationFn: authApi.login,
 		onSuccess: (data: Response) => {
 			data.text()
 				.then((response) => {
