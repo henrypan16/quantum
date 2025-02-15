@@ -33,7 +33,7 @@ export const convertTorrentInfo = (info: TorrentInfo) => {
 };
 
 export const intToSize = (size: number | undefined) => {
-	if(typeof size === 'undefined') {
+	if (typeof size === "undefined") {
 		return 0;
 	}
 	const units = ["B", "KB", "MB", "GB", "TB"];

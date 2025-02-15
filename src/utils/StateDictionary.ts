@@ -80,6 +80,14 @@ const stateDictionary: {
 		long: "Unknown status",
 		short: "Unknown",
 	},
+	stoppedDL: {
+		long: "Stopped Downloading",
+		short: "Stopped",
+	},
+	stoppedUP: {
+		long: "Stopped Uploading",
+		short: "Stopped",
+	},
 };
 
 export default stateDictionary;

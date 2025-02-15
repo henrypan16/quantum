@@ -116,7 +116,7 @@ export const torrentApi = {
 		const formData = new FormData();
 		formData.append("hashes", hash);
 
-		return await fetch(`${baseURL}pause`, {
+		return await fetch(`${baseURL}stop`, {
 			method: "POST",
 			body: formData,
 			credentials: "include",
@@ -133,7 +133,7 @@ export const torrentApi = {
 		const formData = new FormData();
 		formData.append("hashes", hash);
 
-		return await fetch(`${baseURL}resume`, {
+		return await fetch(`${baseURL}start`, {
 			method: "POST",
 			body: formData,
 			credentials: "include",

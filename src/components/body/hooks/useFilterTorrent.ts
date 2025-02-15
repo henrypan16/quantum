@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { UseQueryResult } from "@tanstack/react-query";
 import { TorrentInfo } from "@utils/types";
 import stateDictionary from "@utils/StateDictionary";
 
 type FilterTorrentProps = {
-	torrents: UseQueryResult<TorrentInfo[], Error>;
+	data: TorrentInfo[];
 	setTorrentData: (data: TorrentInfo[] | undefined) => void;
+	isLoading: boolean;
 };
 
 interface FilterInterface {
@@ -15,8 +15,9 @@ interface FilterInterface {
 }
 
 export const useFilterTorrent = ({
-	torrents: { data, isLoading, isFetching },
+	data,
 	setTorrentData,
+	isLoading,
 }: FilterTorrentProps) => {
 	const [filter, setFilter] = useState<FilterInterface>({
 		status: "Status",
@@ -47,7 +48,7 @@ export const useFilterTorrent = ({
 				}),
 			);
 		}
-	}, [filter, isFetching, data]);
+	}, [filter, data]);
 
 	return {
 		filter,

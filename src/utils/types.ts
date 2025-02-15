@@ -406,3 +406,15 @@ export interface AddTorrentParameters {
 	sequentialDownload?: string; //Enable sequential download. Possible values are true, false (default)
 	firstLastPiecePrio?: string; //Prioritize download first last piece. Possible values are true, false (default)
 }
+
+export interface SyncMainData {
+	rid: number; // Response ID
+	full_update: boolean; // Whether the response contains all the data or partial data
+	torrents: { [key: string]: TorrentInfo }; // Property: torrent hash, value: same as torrent list
+	torrents_removed?: TorrentInfo[]; // List of hashes of torrents removed since last request
+	categories: { [key: string]: { name: string; savePath: string } }; // Info for categories added since last request
+	categories_removed?: string[]; // List of categories removed since last request
+	tags: string[]; // List of tags added since last request
+	tags_removed?: string[]; // List of tags removed since last request
+	server_state?: object; // Global transfer info
+}

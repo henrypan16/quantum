@@ -19,7 +19,7 @@ export const TorrentManager = () => {
 	const [toast, setToast] = useState<ReactNode[]>([]);
 	const [hash, setHash] = useState("");
 
-	const { torrents, categories, tags } = useFetchData();
+	const { torrents, categories, tags, isLoading } = useFetchData();
 
 	const { mutate: pauseTorrent } = useMutation({
 		mutationFn: torrentApi.pause,
@@ -48,10 +48,15 @@ export const TorrentManager = () => {
 	});
 
 	const { filter, setFilter } = useFilterTorrent({
-		torrents,
+		data: torrents,
 		setTorrentData,
+		isLoading,
 	});
-	const { setSearchString } = useSearchTorrent({ torrents, setTorrentData });
+	const { setSearchString } = useSearchTorrent({
+		data: torrents,
+		setTorrentData,
+		isLoading,
+	});
 
 	//{modalId, modalRef, hide, show}
 	const modal = useModal();
@@ -62,8 +67,8 @@ export const TorrentManager = () => {
 		resume: () => resumeTorrent(hash),
 		setSearchString: setSearchString,
 		status: Object.values(stateDictionary).map((item) => item.short),
-		categories: !categories.isLoading && categories.data,
-		tags: !tags.isLoading && tags.data,
+		categories: categories,
+		tags: tags,
 		filter: filter,
 		setFilter: setFilter,
 	};
@@ -77,7 +82,7 @@ export const TorrentManager = () => {
 
 			<Toolbar {...toolBarProps} />
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar">
-				{torrents.isLoading ? (
+				{isLoading ? (
 					<Loading />
 				) : (
 					<>
@@ -92,12 +97,12 @@ export const TorrentManager = () => {
 				)}
 			</div>
 			<div className="basis-1/2 w-full overflow-auto relative scrollbar flex flex-col-reverse border rounded-t-sm border-gray-700 bg-gray-800">
-				{torrents.isLoading ? (
+				{isLoading ? (
 					<Loading />
 				) : (
-					torrents.data && (
+					torrents && (
 						<Info
-							torrent={torrents.data.find(
+							torrent={torrents.find(
 								(torrent) => torrent.hash === hash,
 							)}
 						/>

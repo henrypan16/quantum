@@ -85,7 +85,6 @@ export const General = ({ torrent }: { torrent: TorrentInfo }) => {
 								value={secToTime(torrent.eta)}
 							/>
 
-
 							<TransferInfo label="Reannounce In" value="∞" />
 						</div>
 
@@ -115,7 +114,7 @@ export const General = ({ torrent }: { torrent: TorrentInfo }) => {
 					<p className="absolute -top-3 -left-1 bg-gray-800 w-fit px-1 text-gray-300 font-bold">
 						Information
 					</p>
-					<div className="mt-3 overflow-scroll">
+					<div className="mt-3 overflow-scroll scrollbar">
 						<div className="px-4 pb-2 w-fit flex flex-col gap-y-1">
 							<TransferInfo
 								label="Total Size"
@@ -125,7 +124,10 @@ export const General = ({ torrent }: { torrent: TorrentInfo }) => {
 								label="Pieces"
 								value={`${data?.pieces_num} x ${intToSize(data?.piece_size)} (have ${data?.pieces_have})`}
 							/>
-							<TransferInfo label="Created By" value={data?.created_by} />
+							<TransferInfo
+								label="Created By"
+								value={data?.created_by}
+							/>
 							<TransferInfo
 								label="Added On"
 								value={data?.addition_date}
@@ -134,18 +136,17 @@ export const General = ({ torrent }: { torrent: TorrentInfo }) => {
 								label="Completed On"
 								value={data?.completion_date}
 							/>
+							<TransferInfo label="Hash" value={torrent.hash} />
+							<TransferInfo label="Info Hash v2" value="N/A" />
 							<TransferInfo
-								label="Hash"
-								value={torrent.hash}
+								label="Path"
+								value={data?.save_path}
 							/>
 							<TransferInfo
-								label="Info Hash v2"
-								value="N/A"
+								label="Comment"
+								value={data?.comment}
 							/>
-							<TransferInfo label="Path" value={data?.save_path} />
-							<TransferInfo label="Comment" value={data?.comment} />
 						</div>
-
 					</div>
 				</div>
 			</div>
